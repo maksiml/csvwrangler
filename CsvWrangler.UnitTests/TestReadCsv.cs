@@ -27,6 +27,30 @@ namespace CsvWrangler.UnitTests
     [TestFixture]
     public class TestReadCsv
     {
+        /// <summary>
+        /// The interface for the item that is expected from CSV.
+        /// </summary>
+        public interface ITestItemInterface
+        {
+            /// <summary>
+            /// Gets or sets value for header 1.
+            /// </summary>
+            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
+            string head1 { get; set; }
+
+            /// <summary>
+            /// Gets or sets value for header 2.
+            /// </summary>
+            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
+            string head2 { get; set; }
+
+            /// <summary>
+            /// Gets or sets value for header 3.
+            /// </summary>
+            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
+            string head3 { get; set; }
+        }
+
         // ReSharper disable InconsistentNaming
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
@@ -83,31 +107,6 @@ namespace CsvWrangler.UnitTests
                 }
             }
         }
-
-        /// <summary>
-        /// The interface for the item that is expected from CSV.
-        /// </summary>
-        public interface ITestItemInterface
-        {
-            /// <summary>
-            /// Gets or sets value for header 1.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
-            string head1 { get; set; }
-
-            /// <summary>
-            /// Gets or sets value for header 2.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
-            string head2 { get; set; }
-
-            /// <summary>
-            /// Gets or sets value for header 3.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Test class.")]
-            string head3 { get; set; }
-        }
-
         // ReSharper restore InconsistentNaming
     }
 }

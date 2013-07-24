@@ -30,7 +30,6 @@ namespace CsvWrangler
         /// </returns>
         public static IEnumerable<dynamic> Parse(Stream input)
         {
-            
             using (TextReader reader = new StreamReader(input))
             {
                 string line = reader.ReadLine();

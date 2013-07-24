@@ -1,4 +1,14 @@
-﻿using System.Reflection;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="CsvWrangler">
+//   This file is a part of CsvWrangler and is licensed under the MS-PL.
+//   http://www.opensource.org/licenses/ms-pl.html
+// </copyright>
+// <summary>
+//   AssemblyInfo.cs
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
