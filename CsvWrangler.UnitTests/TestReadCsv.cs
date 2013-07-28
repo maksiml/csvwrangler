@@ -176,7 +176,7 @@ namespace CsvWrangler.UnitTests
             out string csvContent,
             out List<string> expectedHeaders)
         {
-            Console.WriteLine("Given there is a properly formatted CSV file with headers that have spaces.");
+            Console.WriteLine("Given there is a properly formatted CSV file with headers that do not match rules.");
             var testData = new List<List<string>>
                                 {
                                     new List<string> { "1header", "head3", "два" },
@@ -202,7 +202,7 @@ namespace CsvWrangler.UnitTests
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         private static List<dynamic> when_csv_is_parsed(string csvContent)
         {
-            Console.WriteLine("When the CSV is parsed,");
+            Console.WriteLine("When the CSV is parsed.");
             List<dynamic> result;
             using (var stream = csvContent.ToStream())
             {
@@ -286,7 +286,7 @@ namespace CsvWrangler.UnitTests
             List<dynamic> result, 
             bool useHeader)
         {
-            Console.WriteLine("Expect resulting enumeration to have rows minus one items,");
+            Console.WriteLine("Expect resulting enumeration to count all rows except header.");
             Assert.AreEqual(useHeader ? testData.Count - 1 : testData.Count, result.Count);
         }
     }
