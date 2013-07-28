@@ -13,6 +13,7 @@ namespace CsvWrangler
     using System.Collections.Generic;
     using System.Dynamic;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// The CSV reader.
@@ -38,7 +39,10 @@ namespace CsvWrangler
                     return new dynamic[0];
                 }
 
-                string[] headers = line.Split(',');
+                List<string> headers = line
+                                        .Split(',')
+                                        .Select(header => header.ToTitleCase().Replace(" ", string.Empty))
+                                        .ToList();
 
                 line = reader.ReadLine();
 
@@ -47,7 +51,7 @@ namespace CsvWrangler
                 {
                     var lineObject = new ExpandoObject() as IDictionary<string, object>;
                     string[] values = line.Split(',');
-                    for (int index = 0; index < headers.Length; index++)
+                    for (int index = 0; index < headers.Count; index++)
                     {
                         var header = headers[index];
                         lineObject.Add(header, values[index]);

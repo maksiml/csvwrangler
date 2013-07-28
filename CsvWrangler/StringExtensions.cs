@@ -8,15 +8,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace CsvWrangler.UnitTests
+namespace CsvWrangler
 {
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.IO;
 
     /// <summary>
     /// The string extension methods.
     /// </summary>
-    internal static class StringExtensions
+    public static class StringExtensions
     {
         /// <summary>
         /// Create stream from string.
@@ -37,6 +38,21 @@ namespace CsvWrangler.UnitTests
             writer.Flush();
             stream.Position = 0;
             return stream;
+        }
+
+        /// <summary>
+        /// Convert string to title case.
+        /// </summary>
+        /// <param name="input">
+        /// The source string.
+        /// </param>
+        /// <returns>
+        /// The string with title case (wAr aND PeAce => War And Peace).
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "String conversion sample.")]
+        public static string ToTitleCase(this string input)
+        {
+            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(input);
         }
     }
 }
