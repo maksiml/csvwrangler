@@ -14,12 +14,19 @@ namespace CsvWrangler
     using System.Dynamic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// The CSV reader.
     /// </summary>
     public class CsvReader
     {
+        /// <summary>
+        /// Regular expression that matches permitted names. The expression is made
+        /// stricter than C# rules on purpose to avoid confusion.
+        /// </summary>
+        private static readonly Regex AllowedHeaderNames = new Regex("^[_a-zA-Z][_0-9a-zA-Z]*$");
+
         /// <summary>
         /// Parse CSV file to list of dynamic objects.
         /// </summary>
@@ -43,6 +50,13 @@ namespace CsvWrangler
                                         .Split(',')
                                         .Select(header => header.ToTitleCase().Replace(" ", string.Empty))
                                         .ToList();
+                for (int i = 0; i < headers.Count; i++)
+                {
+                    if (!AllowedHeaderNames.IsMatch(headers[i]))
+                    {
+                        headers[i] = string.Format("Column{0}", i);
+                    }
+                }
 
                 line = reader.ReadLine();
 

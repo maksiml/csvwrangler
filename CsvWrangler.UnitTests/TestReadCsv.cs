@@ -83,6 +83,19 @@ namespace CsvWrangler.UnitTests
                            expect_item_properties_to_correspond_to_headers(result, expectedHeaders);
         }
 
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        [TestCase]
+        public void replace_headers_not_macthing_rules_with_generic_name()
+        {
+            string csvContent;
+            List<string> expectedHeaders = null;
+
+                         given_there_is_a_csv_with_header_not_matching_identifier_rules(out csvContent, out expectedHeaders);
+            var result = when_csv_is_parsed(csvContent);
+                         expect_item_properties_to_correspond_to_headers(result, expectedHeaders);
+        }
+
         /// <summary>
         /// Create properly formatted CSV with header.
         /// </summary>
@@ -141,6 +154,37 @@ namespace CsvWrangler.UnitTests
             expectedHeaders = new List<string>
                                   {
                                       "Head1Head", "Head2", "Head3"
+                                  };
+            csvContent = string.Join("\n", testData.Select(row => string.Join(",", row)));
+            return testData;
+        }
+
+        /// <summary>
+        /// Given there is a properly formatted CSV file with headers that contain C# keywords.
+        /// </summary>
+        /// <param name="csvContent">
+        /// The CSV content.
+        /// </param>
+        /// <param name="expectedHeaders">
+        /// The expected headers.
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private static List<List<string>> given_there_is_a_csv_with_header_not_matching_identifier_rules(
+            out string csvContent,
+            out List<string> expectedHeaders)
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with headers that have spaces.");
+            var testData = new List<List<string>>
+                                {
+                                    new List<string> { "1header", "head3", "два" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                };
+            expectedHeaders = new List<string>
+                                  {
+                                      "Column0", "Head3", "Column2"
                                   };
             csvContent = string.Join("\n", testData.Select(row => string.Join(",", row)));
             return testData;
