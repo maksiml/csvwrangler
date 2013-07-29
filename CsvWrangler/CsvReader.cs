@@ -11,7 +11,6 @@
 namespace CsvWrangler
 {
     using System.Collections.Generic;
-    using System.Dynamic;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -33,46 +32,57 @@ namespace CsvWrangler
         /// <param name="input">
         /// The input CSV stream.
         /// </param>
+        /// <param name="hasHeader">
+        /// The has header.
+        /// </param>
         /// <returns>
         /// The list of dynamic objects produced from CSV lines.
         /// </returns>
-        public static IEnumerable<dynamic> Parse(Stream input)
+        public static IEnumerable<dynamic> Parse(Stream input, bool hasHeader = true)
         {
             using (TextReader reader = new StreamReader(input))
             {
+                const char Separator = ',';
+
+                List<string> headers;
                 string line = reader.ReadLine();
                 if (line == null)
                 {
                     return new dynamic[0];
                 }
 
-                List<string> headers = line
-                                        .Split(',')
-                                        .Select(header => header.ToTitleCase().Replace(" ", string.Empty))
-                                        .ToList();
-                for (int i = 0; i < headers.Count; i++)
+                if (hasHeader)
                 {
-                    if (!AllowedHeaderNames.IsMatch(headers[i]))
+                    headers = line
+                                .Split(Separator)
+                                .Select(header => header.ToTitleCase().Replace(" ", string.Empty))
+                                .ToList();
+                    for (int i = 0; i < headers.Count; i++)
                     {
-                        headers[i] = string.Format("Column{0}", i);
+                        if (!AllowedHeaderNames.IsMatch(headers[i]))
+                        {
+                            headers[i] = string.Format("Column{0}", i);
+                        }
+                    }
+
+                    line = reader.ReadLine();
+                }
+                else
+                {
+                    headers = new List<string>();
+                    int headerCount = line.Split(Separator).Length;
+                    for (int i = 0; i < headerCount; i++)
+                    {
+                        headers.Add(string.Format("Column{0}", i));
                     }
                 }
-
-                line = reader.ReadLine();
 
                 var result = new List<dynamic>();
                 while (line != null)
                 {
-                    var lineObject = new ExpandoObject() as IDictionary<string, object>;
-                    string[] values = line.Split(',');
-                    for (int index = 0; index < headers.Count; index++)
-                    {
-                        var header = headers[index];
-                        lineObject.Add(header, values[index]);
-                    }
-
+                    string[] values = line.Split(Separator);
+                    dynamic lineObject = new CsvRow(headers, values.ToList());
                     result.Add(lineObject);
-
                     line = reader.ReadLine();
                 }
 

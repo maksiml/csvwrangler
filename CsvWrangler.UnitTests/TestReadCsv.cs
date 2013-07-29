@@ -61,13 +61,14 @@ namespace CsvWrangler.UnitTests
         public void read_properly_formatted_csv_file()
         {
             string csvContent;
-            List<string> expectedHeaders = null;
+            List<string> expectedHeaders;
 
             var testData = given_there_is_properly_formatted_csv_with_header(out csvContent, out expectedHeaders);
             var result   = when_csv_is_parsed(csvContent);
                            expect_correct_count_of_items(testData, result, useHeader: true);
                            expect_item_properties_to_correspond_to_headers(result, expectedHeaders);
                            expect_property_value_to_be_the_same_as_in_corresponding_cell(testData, result);
+                           expect_enumeration_of_item_to_yield_cells(testData, result, hasHeader: true);
         }
 
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
@@ -76,7 +77,7 @@ namespace CsvWrangler.UnitTests
         public void space_removed_from_header()
         {
             string csvContent;
-            List<string> expectedHeaders = null;
+            List<string> expectedHeaders;
 
                            given_there_is_a_csv_with_header_with_space(out csvContent, out expectedHeaders);
             var result   = when_csv_is_parsed(csvContent);
@@ -89,11 +90,27 @@ namespace CsvWrangler.UnitTests
         public void replace_headers_not_macthing_rules_with_generic_name()
         {
             string csvContent;
-            List<string> expectedHeaders = null;
+            List<string> expectedHeaders;
 
                          given_there_is_a_csv_with_header_not_matching_identifier_rules(out csvContent, out expectedHeaders);
             var result = when_csv_is_parsed(csvContent);
                          expect_item_properties_to_correspond_to_headers(result, expectedHeaders);
+        }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        [TestCase]
+        public void rows_of_csv_without_headers_are_converted_to_lists()
+        {
+            string csvContent;
+            List<string> expectedHeaders;
+
+            var testData = given_there_is_a_csv_without_header(out csvContent, out expectedHeaders);
+            var result   = when_csv_without_header_is_parsed(csvContent);
+                           expect_each_row_to_be_a_list_of_string_values(result);
+                           expect_correct_count_of_items(testData, result, useHeader: false);
+                           expect_item_properties_to_correspond_to_headers(result, expectedHeaders);
+                           expect_enumeration_of_item_to_yield_cells(testData, result, hasHeader: false);
         }
 
         /// <summary>
@@ -138,7 +155,7 @@ namespace CsvWrangler.UnitTests
         /// The expected headers.
         /// </param>
         /// <returns>
-        /// The <see cref="List"/>.
+        /// The matrix that contains source data.
         /// </returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         private static List<List<string>> given_there_is_a_csv_with_header_with_space(
@@ -169,7 +186,7 @@ namespace CsvWrangler.UnitTests
         /// The expected headers.
         /// </param>
         /// <returns>
-        /// The <see cref="List"/>.
+        /// The matrix that contains source data.
         /// </returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         private static List<List<string>> given_there_is_a_csv_with_header_not_matching_identifier_rules(
@@ -191,6 +208,35 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
+        /// Given there is a CSV without header.
+        /// </summary>
+        /// <param name="csvContent">
+        /// The CSV content.
+        /// </param>
+        /// <param name="expectedHeaders">
+        /// The expected headers.
+        /// </param>
+        /// <returns>
+        /// The matrix that contains source data.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private static List<List<string>> given_there_is_a_csv_without_header(out string csvContent, out List<string> expectedHeaders)
+        {
+            Console.WriteLine("Given there is a CSV without header.");
+            var testData = new List<List<string>>
+                                {
+                                    new List<string> { "val11", "val12", "val13" },
+                                    new List<string> { "val21", "val22", "val23" },
+                                };
+            csvContent = string.Join("\n", testData.Select(row => string.Join(",", row)));
+            expectedHeaders = new List<string>
+                                  {
+                                      "Column0", "Column1", "Column2"
+                                  };
+            return testData;
+        }
+
+            /// <summary>
         /// Parse CSV.
         /// </summary>
         /// <param name="csvContent">
@@ -213,6 +259,28 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
+        /// When the CSV without header is parsed.
+        /// </summary>
+        /// <param name="csvContent">
+        /// The CSV content.
+        /// </param>
+        /// <returns>
+        /// List of object retrieved from the CSV.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private static List<dynamic> when_csv_without_header_is_parsed(string csvContent)
+        {
+            Console.WriteLine("When the CSV without header is parsed.");
+            List<dynamic> result;
+            using (var stream = csvContent.ToStream())
+            {
+                result = CsvReader.Parse(stream, hasHeader: false).ToList();
+            }
+
+            return result;
+        }
+
+            /// <summary>
         /// Expect property values to be the same as in corresponding cells.
         /// </summary>
         /// <param name="testData">
@@ -222,7 +290,9 @@ namespace CsvWrangler.UnitTests
         /// The result.
         /// </param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
-        private static void expect_property_value_to_be_the_same_as_in_corresponding_cell(List<List<string>> testData, List<dynamic> result)
+        private static void expect_property_value_to_be_the_same_as_in_corresponding_cell(
+            List<List<string>> testData, 
+            List<dynamic> result)
         {
             List<string> headerRow = testData[0];
             Console.WriteLine("Expect property values to be the same as in corresponding cells.");
@@ -234,6 +304,35 @@ namespace CsvWrangler.UnitTests
                     string expected = testData[i + 1][j];
                     string actual = item.GetType().GetProperty(headerRow[j].ToTitleCase()).GetValue(item).ToString();
                     Assert.AreEqual(expected, actual);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Expect enumeration of the items that result from parsing of CSV to yield cell values.
+        /// </summary>
+        /// <param name="testData">
+        /// The test data.
+        /// </param>
+        /// <param name="result">
+        /// The result.
+        /// </param>
+        /// <param name="hasHeader">
+        /// Indicates if source CSV has a header.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private static void expect_enumeration_of_item_to_yield_cells(List<List<string>> testData, List<dynamic> result, bool hasHeader)
+        {
+            Console.WriteLine("Expect enumeration of the items that result from parsing of CSV to yield cell values.");
+            for (int i = 0; i < result.Count; i++)
+            {
+                int index = hasHeader ? i + 1 : i;
+                List<string> expectedRow = testData[index];
+                dynamic row = result[i];
+                List<string> actualRow = ((IEnumerable<string>)row).ToList();
+                for (int j = 0; j < actualRow.Count; j++)
+                {
+                    Assert.AreEqual(expectedRow[j], actualRow[j]);
                 }
             }
         }
@@ -288,6 +387,19 @@ namespace CsvWrangler.UnitTests
         {
             Console.WriteLine("Expect resulting enumeration to count all rows except header.");
             Assert.AreEqual(useHeader ? testData.Count - 1 : testData.Count, result.Count);
+        }
+
+        /// <summary>
+        /// Expect each row to be a list of string values.
+        /// </summary>
+        /// <param name="result">
+        /// The result.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private static void expect_each_row_to_be_a_list_of_string_values(List<dynamic> result)
+        {
+            Console.WriteLine("Expect each row to be a list of string values.");
+            result.ForEach(row => Assert.IsNotNull(row as IEnumerable<string>));
         }
     }
     // ReSharper restore InconsistentNaming
