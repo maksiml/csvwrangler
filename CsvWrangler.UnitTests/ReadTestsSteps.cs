@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CsvWranglerTestsSteps.cs" company="CsvWrangler">
+// <copyright file="ReadTestsSteps.cs" company="CsvWrangler">
 //   This file is a part of CsvWrangler and is licensed under the MS-PL.
 //   http://www.opensource.org/licenses/ms-pl.html
 // </copyright>
@@ -26,7 +26,7 @@ namespace CsvWrangler.UnitTests
     /// <summary>
     /// Step definitions for CSV Wrangler tests.
     /// </summary>
-    internal class CsvWranglerTestsSteps
+    internal class ReadTestsSteps
     {
         /// <summary>
         /// The new column default value.
@@ -219,7 +219,7 @@ namespace CsvWrangler.UnitTests
             Console.WriteLine("Expect property values to be the same as in corresponding cells.");
             for (int i = 0; i < this.ReadResult.Count; i++)
             {
-                TestReadCsv.ITestItemInterface item = Impromptu.ActLike<TestReadCsv.ITestItemInterface>(this.ReadResult[i]);
+                ITestItemInterface item = Impromptu.ActLike<ITestItemInterface>(this.ReadResult[i]);
                 for (int j = 0; j < headerRow.Count; j++)
                 {
                     string expected = this.TestData[i + 1][j];

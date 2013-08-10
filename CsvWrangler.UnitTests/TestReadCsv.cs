@@ -25,34 +25,7 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// The steps.
         /// </summary>
-        private readonly CsvWranglerTestsSteps steps = new CsvWranglerTestsSteps();
-
-        /// <summary>
-        /// The interface for the item that is expected from CSV.
-        /// </summary>
-        public interface ITestItemInterface
-        {
-            /// <summary>
-            /// Gets or sets value for header 1.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-                Justification = "Test class.")]
-            string Head1 { get; set; }
-
-            /// <summary>
-            /// Gets or sets value for header 2.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-                Justification = "Test class.")]
-            string Head2 { get; set; }
-
-            /// <summary>
-            /// Gets or sets value for header 3.
-            /// </summary>
-            [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-                Justification = "Test class.")]
-            string Head3 { get; set; }
-        }
+        private readonly ReadTestsSteps steps = new ReadTestsSteps();
 
         /// <summary>
         /// Initialize test.
