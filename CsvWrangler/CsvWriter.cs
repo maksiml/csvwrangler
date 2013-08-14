@@ -25,6 +25,11 @@ namespace CsvWrangler
     public class CsvWriter
     {
         /// <summary>
+        /// List of parameters that is used to find ToString method that accepts culture info.
+        /// </summary>
+        private static readonly Type[] CultureSensitiveToStringParameters = new[] { typeof(CultureInfo) };
+
+        /// <summary>
         /// Convert list of object of the same type to CSV.
         /// </summary>
         /// <param name="items">
@@ -66,7 +71,7 @@ namespace CsvWrangler
                     }
                     else
                     {
-                        var toStringMethod = properties[i].PropertyType.GetMethod("ToString", new[] { typeof(CultureInfo) });
+                        var toStringMethod = properties[i].PropertyType.GetMethod("ToString", CultureSensitiveToStringParameters);
                         var value = properties[i].GetMethod.Invoke(item, null);
                         if (toStringMethod != null)
                         {
