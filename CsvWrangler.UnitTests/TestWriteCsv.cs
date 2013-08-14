@@ -51,6 +51,19 @@ namespace CsvWrangler.UnitTests
             this.steps.when_the_list_is_persisted_to_csv();
             this.steps.expect_date_fields_to_be_persisted_using_invariant_culture(useHeader: true);
         }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
+            Justification = "Unit test naming convention.")]
+        [TestMethod]
+        public void dates_should_be_serialized_with_specified_date_format()
+        {
+            const string DateTimeFormat = "u";
+            this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
+            this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions { DateTimeFormat = DateTimeFormat });
+            this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
+        }
     }
 
     // ReSharper restore InconsistentNaming

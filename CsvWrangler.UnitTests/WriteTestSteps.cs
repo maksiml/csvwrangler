@@ -36,12 +36,12 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// List of items that will be converted to CSV.
         /// </summary>
-        private IEnumerable<ITestItemInterface> items = null;
+        private IEnumerable<ITestItemInterface> items;
 
         /// <summary>
         /// The date time items.
         /// </summary>
-        private IEnumerable<DateTimeTestItem> dateTimeItems = null;
+        private IEnumerable<DateTimeTestItem> dateTimeItems;
 
         /// <summary>
         /// The resulting CSV.
@@ -72,7 +72,7 @@ namespace CsvWrangler.UnitTests
                 };
             this.items = result.Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
             this.expectedHeaders = "Head1,Head2,Head3";
-            this.expectedLines = new string[]
+            this.expectedLines = new[]
                                     {
                                         "val11,val12,val13",
                                         "val21,val22,val23"
@@ -92,18 +92,21 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
+        /// <param name="options">
+        /// The options for serializations.
+        /// </param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
-        public void when_the_list_is_persisted_to_csv()
+        public void when_the_list_is_persisted_to_csv(CsvWriterOptions options = null)
         {
             Console.WriteLine("When the list is converted to CSV.");
-            Stream stream = null;
+            Stream stream;
             if (this.items != null)
             {
-                stream = CsvWriter.ToCsv(this.items);
+                stream = CsvWriter.ToCsv(this.items, options);
             } 
             else if (this.dateTimeItems != null)
             {
-                stream = CsvWriter.ToCsv(this.dateTimeItems);
+                stream = CsvWriter.ToCsv(this.dateTimeItems, options);
             }
             else
             {
@@ -160,6 +163,25 @@ namespace CsvWrangler.UnitTests
             int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
             Assert.IsTrue(actualLineCount > 0);
             Assert.AreEqual(expectedDateTime.ToString(CultureInfo.InvariantCulture), lines.Last());
+        }
+
+        /// <summary>
+        /// Expect the date field to be formatted using provided format.
+        /// </summary>
+        /// <param name="useHeader">
+        /// The use header.
+        /// </param>
+        /// <param name="dateTimeFormat">
+        /// The date time format.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        public void expect_date_field_be_persited_using_provided_format(bool useHeader, string dateTimeFormat)
+        {
+            Console.WriteLine("Expect the date field to be formatted using provided format");
+            string[] lines = this.csv.Split('\n');
+            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
+            Assert.IsTrue(actualLineCount > 0);
+            Assert.AreEqual(expectedDateTime.ToString(dateTimeFormat), lines.Last());
         }
 
         /// <summary>
