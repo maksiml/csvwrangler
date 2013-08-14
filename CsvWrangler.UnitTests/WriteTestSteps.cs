@@ -29,6 +29,11 @@ namespace CsvWrangler.UnitTests
     internal class WriteTestSteps
     {
         /// <summary>
+        /// The expected double value.
+        /// </summary>
+        private const double ExpectedDoubleValue = 3.4;
+
+        /// <summary>
         /// The expected date time value.
         /// </summary>
         private static DateTime expectedDateTime = DateTime.Now;
@@ -42,6 +47,11 @@ namespace CsvWrangler.UnitTests
         /// The date time items.
         /// </summary>
         private IEnumerable<DateTimeTestItem> dateTimeItems;
+
+        /// <summary>
+        /// The double test items.
+        /// </summary>
+        private IEnumerable<DoubleTestItem> doubleTestItems; 
 
         /// <summary>
         /// The resulting CSV.
@@ -90,6 +100,16 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
+        /// Given there is a list of items of type that has 'double' property.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        public void given_there_is_a_list_of_items_of_type_that_has_double_property()
+        {
+            Console.WriteLine("Given there is a list of items of type that has 'double' property");
+            this.doubleTestItems = new List<DoubleTestItem> { new DoubleTestItem { Double = ExpectedDoubleValue } };
+        }
+
+        /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
         /// <param name="options">
@@ -107,6 +127,10 @@ namespace CsvWrangler.UnitTests
             else if (this.dateTimeItems != null)
             {
                 stream = CsvWriter.ToCsv(this.dateTimeItems, options);
+            }
+            else if (this.doubleTestItems != null)
+            {
+                stream = CsvWriter.ToCsv(this.doubleTestItems, options);
             }
             else
             {
@@ -153,7 +177,7 @@ namespace CsvWrangler.UnitTests
         /// Expect the date field to be formatted using invariant culture.
         /// </summary>
         /// <param name="useHeader">
-        /// The use header.
+        /// Indicates if the CSV is expected to have a header.
         /// </param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_date_fields_to_be_persisted_using_invariant_culture(bool useHeader)
@@ -166,7 +190,7 @@ namespace CsvWrangler.UnitTests
         /// Expect the date field to be formatted using provided format.
         /// </summary>
         /// <param name="useHeader">
-        /// The use header.
+        /// Indicates if the CSV is expected to have a header.
         /// </param>
         /// <param name="dateTimeFormat">
         /// The date time format.
@@ -182,21 +206,30 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
-        /// An interface for the test with <seealso cref="DateTime"/> fields.
+        /// Expect the double field to be serialized with provided format.
         /// </summary>
-        private class DateTimeTestItem
+        /// <param name="useHeader">
+        /// Indicates if the CSV is expected to have a header.
+        /// </param>
+        /// <param name="cultureInfo">
+        /// The culture info.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        public void expect_double_to_be_persisted_using_provided_format(bool useHeader, CultureInfo cultureInfo = null)
         {
-            /// <summary>
-            /// Gets or sets the date time field.
-            /// </summary>
-            public DateTime DateTime { get; set; }
+            Console.WriteLine("Expect the double field to be serialized with provided format");
+            var line = this.GetFirstRow(useHeader);
+            string expectedValue = cultureInfo != null
+                                       ? ExpectedDoubleValue.ToString(cultureInfo)
+                                       : ExpectedDoubleValue.ToString(CultureInfo.InvariantCulture);
+            Assert.AreEqual(expectedValue, line);
         }
 
         /// <summary>
         /// Verify that dates are persisted using specified format.
         /// </summary>
         /// <param name="useHeader">
-        /// The use header.
+        /// Indicates if the CSV is expected to have a header.
         /// </param>
         /// <param name="dateTimeFormat">
         /// The date time format.
@@ -207,9 +240,7 @@ namespace CsvWrangler.UnitTests
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         private void expect_date_field_be_persited_using_correct_format(bool useHeader, string dateTimeFormat = null, CultureInfo cultureInfo = null)
         {
-            string[] lines = this.csv.Split('\n');
-            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
-            Assert.IsTrue(actualLineCount > 0);
+            var line = this.GetFirstRow(useHeader);
             string expectedValue;
             if (dateTimeFormat != null)
             {
@@ -224,9 +255,47 @@ namespace CsvWrangler.UnitTests
                 expectedValue = expectedDateTime.ToString(CultureInfo.InvariantCulture);
             }
 
-            Assert.AreEqual(expectedValue, lines.Last());
+            Assert.AreEqual(expectedValue, line);
         }
 
+        /// <summary>
+        /// Get first row from serialized CSV.
+        /// </summary>
+        /// <param name="useHeader">
+        /// The use header.
+        /// </param>
+        /// <returns>
+        /// The first actual row.
+        /// </returns>
+        private string GetFirstRow(bool useHeader)
+        {
+            string[] lines = this.csv.Split('\n');
+            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
+            Assert.IsTrue(actualLineCount > 0);
+            return lines[useHeader ? 1 : 0];
+        }
+
+        /// <summary>
+        /// A class for the test with <seealso cref="DateTime"/> fields.
+        /// </summary>
+        private class DateTimeTestItem
+        {
+            /// <summary>
+            /// Gets or sets the date time field.
+            /// </summary>
+            public DateTime DateTime { get; set; }
+        }
+
+        /// <summary>
+        /// A class for the test with <seealso cref="double"/> fields.
+        /// </summary>
+        private class DoubleTestItem
+        {
+            /// <summary>
+            /// Gets or sets the double property.
+            /// </summary>
+            public double Double { get; set; }
+        }
     }
     
     // ReSharper restore InconsistentNaming

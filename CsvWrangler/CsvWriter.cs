@@ -59,14 +59,21 @@ namespace CsvWrangler
                     if (properties[i].PropertyType == typeof(DateTime))
                     {
                         var value = (DateTime)properties[i].GetMethod.Invoke(item, null);
-                        var serializedValue = options != null && !string.IsNullOrEmpty(options.DateTimeFormat)
+                        var serializedValue = !string.IsNullOrEmpty(options.DateTimeFormat)
                                                   ? value.ToString(options.DateTimeFormat)
                                                   : value.ToString(options.CultureInfo);
                         stringBuilder.Append(serializedValue);
                     }
                     else
                     {
-                        stringBuilder.Append(properties[i].GetMethod.Invoke(item, null));
+                        var toStringMethod = properties[i].PropertyType.GetMethod("ToString", new[] { typeof(CultureInfo) });
+                        var value = properties[i].GetMethod.Invoke(item, null);
+                        if (toStringMethod != null)
+                        {
+                            value = toStringMethod.Invoke(value, new object[] { options.CultureInfo });
+                        }
+
+                        stringBuilder.Append(value);
                     }
                     
                     if (i < properties.Length - 1)

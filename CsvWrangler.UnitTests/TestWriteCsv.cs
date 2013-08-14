@@ -95,6 +95,21 @@ namespace CsvWrangler.UnitTests
                                                              });
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
         }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
+            Justification = "Unit test naming convention.")]
+        [TestMethod]
+        public void culture_info_is_taken_in_to_account_when_serializing_numbers()
+        {
+            this.steps.given_there_is_a_list_of_items_of_type_that_has_double_property();
+            this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions
+                {
+                    CultureInfo = CultureInfo.GetCultureInfo("lt-LT")
+                });
+            this.steps.expect_double_to_be_persisted_using_provided_format(useHeader: true, cultureInfo: CultureInfo.GetCultureInfo("lt-LT"));
+        }
     }
 
     // ReSharper restore InconsistentNaming
