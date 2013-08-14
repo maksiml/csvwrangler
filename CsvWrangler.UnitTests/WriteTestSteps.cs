@@ -13,6 +13,7 @@ namespace CsvWrangler.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
 
@@ -28,9 +29,19 @@ namespace CsvWrangler.UnitTests
     internal class WriteTestSteps
     {
         /// <summary>
+        /// The expected date time value.
+        /// </summary>
+        private static DateTime expectedDateTime = DateTime.Now;
+
+        /// <summary>
         /// List of items that will be converted to CSV.
         /// </summary>
         private IEnumerable<ITestItemInterface> items = null;
+
+        /// <summary>
+        /// The date time items.
+        /// </summary>
+        private IEnumerable<DateTimeTestItem> dateTimeItems = null;
 
         /// <summary>
         /// The resulting CSV.
@@ -69,13 +80,37 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
+        /// Given there is a list of items of type that has DateTime field.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        public void given_there_is_a_list_of_items_of_type_that_has_date_property()
+        {
+            Console.WriteLine("Given there is a list of items of type that has DateTime field");
+            this.dateTimeItems = new List<DateTimeTestItem> { new DateTimeTestItem { DateTime = expectedDateTime } };
+        }
+
+        /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_the_list_is_persisted_to_csv()
         {
             Console.WriteLine("When the list is converted to CSV.");
-            using (var reader = new StreamReader(CsvWriter.ToCsv(this.items)))
+            Stream stream = null;
+            if (this.items != null)
+            {
+                stream = CsvWriter.ToCsv(this.items);
+            } 
+            else if (this.dateTimeItems != null)
+            {
+                stream = CsvWriter.ToCsv(this.dateTimeItems);
+            }
+            else
+            {
+                throw new InvalidOperationException("No items to serialized are specified.");
+            }
+
+            using (var reader = new StreamReader(stream))
             {
                 this.csv = reader.ReadToEnd();
             }
@@ -109,6 +144,33 @@ namespace CsvWrangler.UnitTests
             {
                 Assert.AreEqual(this.expectedLines[i], lines[useHeader ? i + 1 : i]);
             }
+        }
+
+        /// <summary>
+        /// Expect the date field to be formatted using invariant culture.
+        /// </summary>
+        /// <param name="useHeader">
+        /// The use header.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        public void expect_date_fields_to_be_persisted_using_invariant_culture(bool useHeader)
+        {
+            Console.WriteLine("Expect the date field to be formatted using invariant culture");
+            string[] lines = this.csv.Split('\n');
+            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
+            Assert.IsTrue(actualLineCount > 0);
+            Assert.AreEqual(expectedDateTime.ToString(CultureInfo.InvariantCulture), lines.Last());
+        }
+
+        /// <summary>
+        /// An interface for the test with <seealso cref="DateTime"/> fields.
+        /// </summary>
+        private class DateTimeTestItem
+        {
+            /// <summary>
+            /// Gets or sets the date time field.
+            /// </summary>
+            public DateTime DateTime { get; set; }
         }
     }
     

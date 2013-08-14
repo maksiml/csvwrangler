@@ -12,6 +12,7 @@ namespace CsvWrangler
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -45,7 +46,16 @@ namespace CsvWrangler
                 stringBuilder.Append("\n");
                 for (int i = 0; i < properties.Length; i++)
                 {
-                    stringBuilder.Append(properties[i].GetMethod.Invoke(item, null));
+                    if (properties[i].PropertyType == typeof(DateTime))
+                    {
+                        var value = (DateTime)properties[i].GetMethod.Invoke(item, null);
+                        stringBuilder.Append(value.ToString(CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        stringBuilder.Append(properties[i].GetMethod.Invoke(item, null));
+                    }
+                    
                     if (i < properties.Length - 1)
                     {
                         stringBuilder.Append(',');

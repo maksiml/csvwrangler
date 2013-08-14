@@ -39,6 +39,18 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
+            Justification = "Unit test naming convention.")]
+        [TestMethod]
+        public void dates_in_csv_default_to_invariant_culture()
+        {
+            this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_date_fields_to_be_persisted_using_invariant_culture(useHeader: true);
+        }
     }
 
     // ReSharper restore InconsistentNaming
