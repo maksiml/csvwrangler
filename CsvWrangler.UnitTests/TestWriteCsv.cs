@@ -11,6 +11,7 @@
 namespace CsvWrangler.UnitTests
 {
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -62,6 +63,36 @@ namespace CsvWrangler.UnitTests
             const string DateTimeFormat = "u";
             this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
             this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions { DateTimeFormat = DateTimeFormat });
+            this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
+        }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
+            Justification = "Unit test naming convention.")]
+        [TestMethod]
+        public void culture_info_should_be_used_for_date_time_serialization_when_provided()
+        {
+            var cultureInfo = CultureInfo.GetCultureInfo("lt-LT");
+            this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
+            this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions { CultureInfo = cultureInfo });
+            this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, cultureInfo: cultureInfo);
+        }
+
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
+            Justification = "Unit test naming convention.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
+            Justification = "Unit test naming convention.")]
+        [TestMethod]
+        public void date_time_string_format_takes_precedence_over_culture_info_in_options()
+        {
+            const string DateTimeFormat = "u";
+            this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
+            this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions
+                                                             {
+                                                                 DateTimeFormat = DateTimeFormat, 
+                                                                 CultureInfo = CultureInfo.GetCultureInfo("lt-LT")
+                                                             });
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
         }
     }

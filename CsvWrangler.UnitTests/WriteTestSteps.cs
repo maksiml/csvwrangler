@@ -159,10 +159,7 @@ namespace CsvWrangler.UnitTests
         public void expect_date_fields_to_be_persisted_using_invariant_culture(bool useHeader)
         {
             Console.WriteLine("Expect the date field to be formatted using invariant culture");
-            string[] lines = this.csv.Split('\n');
-            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
-            Assert.IsTrue(actualLineCount > 0);
-            Assert.AreEqual(expectedDateTime.ToString(CultureInfo.InvariantCulture), lines.Last());
+            this.expect_date_field_be_persited_using_correct_format(useHeader);
         }
 
         /// <summary>
@@ -174,14 +171,14 @@ namespace CsvWrangler.UnitTests
         /// <param name="dateTimeFormat">
         /// The date time format.
         /// </param>
+        /// <param name="cultureInfo">
+        /// The culture info.
+        /// </param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
-        public void expect_date_field_be_persited_using_provided_format(bool useHeader, string dateTimeFormat)
+        public void expect_date_field_be_persited_using_provided_format(bool useHeader, string dateTimeFormat = null, CultureInfo cultureInfo = null)
         {
             Console.WriteLine("Expect the date field to be formatted using provided format");
-            string[] lines = this.csv.Split('\n');
-            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
-            Assert.IsTrue(actualLineCount > 0);
-            Assert.AreEqual(expectedDateTime.ToString(dateTimeFormat), lines.Last());
+            this.expect_date_field_be_persited_using_correct_format(useHeader, dateTimeFormat, cultureInfo);
         }
 
         /// <summary>
@@ -194,6 +191,42 @@ namespace CsvWrangler.UnitTests
             /// </summary>
             public DateTime DateTime { get; set; }
         }
+
+        /// <summary>
+        /// Verify that dates are persisted using specified format.
+        /// </summary>
+        /// <param name="useHeader">
+        /// The use header.
+        /// </param>
+        /// <param name="dateTimeFormat">
+        /// The date time format.
+        /// </param>
+        /// <param name="cultureInfo">
+        /// The culture info.
+        /// </param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+        private void expect_date_field_be_persited_using_correct_format(bool useHeader, string dateTimeFormat = null, CultureInfo cultureInfo = null)
+        {
+            string[] lines = this.csv.Split('\n');
+            int actualLineCount = useHeader ? lines.Length - 1 : lines.Length;
+            Assert.IsTrue(actualLineCount > 0);
+            string expectedValue;
+            if (dateTimeFormat != null)
+            {
+                expectedValue = expectedDateTime.ToString(dateTimeFormat);
+            }
+            else if (cultureInfo != null)
+            {
+                expectedValue = expectedDateTime.ToString(cultureInfo);
+            }
+            else
+            {
+                expectedValue = expectedDateTime.ToString(CultureInfo.InvariantCulture);
+            }
+
+            Assert.AreEqual(expectedValue, lines.Last());
+        }
+
     }
     
     // ReSharper restore InconsistentNaming

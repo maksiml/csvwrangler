@@ -42,6 +42,11 @@ namespace CsvWrangler
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1614:ElementParameterDocumentationMustHaveText", Justification = "Reviewed. Suppression is OK here.")]
         public static Stream ToCsv<T>(IEnumerable<T> items, CsvWriterOptions options = null)
         {
+            if (options == null)
+            {
+                options = new CsvWriterOptions();
+            }
+
             Type sourceType = typeof(T);
             PropertyInfo[] properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
             var stringBuilder = new StringBuilder();
@@ -56,7 +61,7 @@ namespace CsvWrangler
                         var value = (DateTime)properties[i].GetMethod.Invoke(item, null);
                         var serializedValue = options != null && !string.IsNullOrEmpty(options.DateTimeFormat)
                                                   ? value.ToString(options.DateTimeFormat)
-                                                  : value.ToString(CultureInfo.InvariantCulture);
+                                                  : value.ToString(options.CultureInfo);
                         stringBuilder.Append(serializedValue);
                     }
                     else
