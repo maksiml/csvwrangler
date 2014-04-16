@@ -108,21 +108,29 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
-        public void new_column_can_be_added_to_read_csv()
+        public void rows_with_mismatched_number_of_cells_filled_with_empty_strings()
         {
-            this.steps.given_there_is_properly_formatted_csv_with_header();
+            this.steps.given_there_is_a_csv_with_header_and_mismatched_row();
             this.steps.when_csv_is_parsed();
-            this.steps.when_new_column_is_added_to_read_result();
-            this.steps.expect_values_set_for_new_column_to_be_retained();
+            this.steps.expect_enumeration_of_item_to_yield_cells(hasHeader: true);
         }
 
         [TestMethod]
-        public void column_can_be_removed_from_read_csv()
+        public void rows_with_mismatched_number_of_cells_fail_read_with_strict_option()
         {
-            this.steps.given_there_is_properly_formatted_csv_with_header();
-            this.steps.when_csv_is_parsed();
-            this.steps.when_column_is_removed_from_read_result();
-            this.steps.expect_none_of_the_items_to_have_removed_column();
+            this.steps.given_there_is_a_csv_with_header_and_mismatched_row();
+            this.steps.when_csv_is_parsed(new CsvReaderOptions { StrictCellCount = true });
+            this.steps.expect_invalid_cell_count_exception();
+        }
+
+        [TestMethod]
+        public void data_is_read_line_by_line()
+        {
+            this.steps.given_there_is_a_csv_with_header_and_mismatched_row();
+
+            // The data here is formed in such way that exception would happen only when second line is read.
+            this.steps.when_first_line_is_read();
+            this.steps.expect_there_are_no_exceptions();
         }
     }
 

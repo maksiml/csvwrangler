@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvInvalidCellCountException.cs" />
     <Compile Include="CsvReader.cs" />
+    <Compile Include="CsvReaderOptions.cs" />
     <Compile Include="CsvRow.cs" />
     <Compile Include="CsvWriter.cs" />
     <Compile Include="CsvWriterOptions.cs" />

@@ -34,12 +34,20 @@ namespace CsvWrangler
         /// <param name="values">
         /// The values.
         /// </param>
-        public CsvRow(List<string> headers, List<string> values)
+        /// <param name="options">
+        /// The options.
+        /// </param>
+        public CsvRow(List<string> headers, List<string> values, CsvReaderOptions options)
         {
+            if (options.StrictCellCount && headers.Count != values.Count)
+            {
+                throw new CsvInvalidCellCountException(headers.Count, values.Count);
+            }
+
             for (int i = 0; i < headers.Count; i++)
             {
                 string header = headers[i];
-                this.values.Add(header, values[i]);
+                this.values.Add(header, values.Count > i ? values[i] : string.Empty);
             }
         }
 
@@ -123,15 +131,12 @@ namespace CsvWrangler
         /// </returns>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            result = null;
             string header = binder.Name;
             bool memeberExists = this.values.ContainsKey(header);
             if (memeberExists)
             {
                 result = this.values[header];
-            }
-            else
-            {
-                result = null;
             }
 
             return memeberExists;

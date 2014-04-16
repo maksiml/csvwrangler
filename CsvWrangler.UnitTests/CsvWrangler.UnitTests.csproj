@@ -61,6 +61,7 @@
     <Compile Include="ITestItemInterface.cs" />
     <Compile Include="ReadTestsSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCsvRow.cs" />
     <Compile Include="TestReadCsv.cs" />
     <Compile Include="TestWriteCsv.cs" />
     <Compile Include="WriteTestSteps.cs" />

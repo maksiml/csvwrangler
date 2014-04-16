@@ -35,11 +35,19 @@ namespace CsvWrangler
         /// <param name="hasHeader">
         /// The has header.
         /// </param>
+        /// <param name="options">
+        /// The options.
+        /// </param>
         /// <returns>
         /// The list of dynamic objects produced from CSV lines.
         /// </returns>
-        public static IEnumerable<dynamic> Parse(Stream input, bool hasHeader = true)
+        public static IEnumerable<dynamic> Parse(Stream input, bool hasHeader = true, CsvReaderOptions options = null)
         {
+            if (options == null)
+            {
+                options = new CsvReaderOptions();
+            }
+
             using (TextReader reader = new StreamReader(input))
             {
                 const char Separator = ',';
@@ -48,7 +56,7 @@ namespace CsvWrangler
                 string line = reader.ReadLine();
                 if (line == null)
                 {
-                    return new dynamic[0];
+                    yield break;
                 }
 
                 if (hasHeader)
@@ -77,16 +85,13 @@ namespace CsvWrangler
                     }
                 }
 
-                var result = new List<dynamic>();
                 while (line != null)
                 {
                     string[] values = line.Split(Separator);
-                    dynamic lineObject = new CsvRow(headers, values.ToList());
-                    result.Add(lineObject);
+                    dynamic lineObject = new CsvRow(headers, values.ToList(), options);
+                    yield return lineObject;
                     line = reader.ReadLine();
                 }
-
-                return result;
             }
         }
     }

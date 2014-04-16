@@ -11,11 +11,13 @@
 namespace CsvWrangler.UnitTests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Dynamic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     using ImpromptuInterface;
 
@@ -27,6 +29,7 @@ namespace CsvWrangler.UnitTests
     /// Step definitions for CSV Wrangler tests.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Descriptive names.")]
     internal class ReadTestsSteps
     {
         /// <summary>
@@ -59,6 +62,8 @@ namespace CsvWrangler.UnitTests
         /// </summary>
         public List<dynamic> ReadResult { get; set; }
 
+        public Exception Exception { get; set; }
+
         /// <summary>
         /// Reset steps.
         /// </summary>
@@ -68,6 +73,7 @@ namespace CsvWrangler.UnitTests
             this.CsvContent = null;
             this.ExpectedHeaders = null;
             this.ReadResult = null;
+            this.Exception = null;
         }
 
         /// <summary>
@@ -153,15 +159,41 @@ namespace CsvWrangler.UnitTests
             this.TestData = new List<List<string>>();
         }
 
+        public void given_there_is_a_csv_with_header_and_mismatched_row()
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with header and some row misses cells.");
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { "head1", "head2", "head3" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                    new List<string> { "val21", "val22" },
+                                };
+            this.ExpectedHeaders = new List<string>
+                                  {
+                                      "Head1", "Head2", "Head3"
+                                  };
+            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
+        }
+
         /// <summary>
         /// Parse CSV.
         /// </summary>
-        public void when_csv_is_parsed()
+        /// <param name="options">
+        /// Reader options.
+        /// </param>
+        public void when_csv_is_parsed(CsvReaderOptions options = null)
         {
             Console.WriteLine("When the CSV is parsed.");
-            using (var stream = this.CsvContent.ToStream())
+            try
             {
-                this.ReadResult = CsvReader.Parse(stream).ToList();
+                using (var stream = this.CsvContent.ToStream())
+                {
+                    this.ReadResult = CsvReader.Parse(stream, options: options).ToList();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Exception = exception;
             }
         }
 
@@ -201,6 +233,22 @@ namespace CsvWrangler.UnitTests
             }
         }
 
+        public void when_first_line_is_read()
+        {
+            Console.WriteLine("When the first line from the CSV is parsed.");
+            try
+            {
+                using (var stream = this.CsvContent.ToStream())
+                {
+                    this.ReadResult = new List<dynamic> { CsvReader.Parse(stream, options: new CsvReaderOptions { StrictCellCount = true }).First() };
+                }
+            }
+            catch (Exception exception)
+            {
+                this.Exception = exception;
+            }
+        }
+
         /// <summary>
         /// Expect property values to be the same as in corresponding cells.
         /// </summary>
@@ -235,7 +283,7 @@ namespace CsvWrangler.UnitTests
                 List<string> expectedRow = this.TestData[index];
                 dynamic row = this.ReadResult[i];
                 List<string> actualRow = ((IEnumerable<string>)row).ToList();
-                for (int j = 0; j < actualRow.Count; j++)
+                for (int j = 0; j < expectedRow.Count; j++)
                 {
                     Assert.AreEqual(expectedRow[j], actualRow[j]);
                 }
@@ -374,6 +422,35 @@ namespace CsvWrangler.UnitTests
             {
                 string value;
                 Assert.IsFalse(item.TryGetValue(this.TestData[0][0].ToTitleCase(), out value));
+            }
+        }
+
+        public void expect_invalid_cell_count_exception()
+        {
+            Console.WriteLine("Expect invalid cell count exception.");
+            Assert.IsInstanceOfType(this.Exception, typeof(CsvInvalidCellCountException));
+        }
+
+        public void expect_there_are_no_exceptions()
+        {
+            Console.WriteLine("Expect there are no exceptions.");
+            Assert.IsNull(this.Exception);
+        }
+
+        public void expect_cell_data_can_be_updated()
+        {
+            ((IDictionary<string, string>)this.ReadResult[0])[this.ExpectedHeaders[0]] = "Test";
+        }
+
+        public void expect_cell_values_can_be_enumerated()
+        {
+            var expectedValues = this.TestData[1];
+            var actualValues = (IEnumerable)this.ReadResult[0];
+            int expectedCount = 0;
+            foreach (string actualValue in actualValues)
+            {
+                Assert.AreEqual(expectedValues[expectedCount], actualValue);
+                expectedCount++;
             }
         }
     }
