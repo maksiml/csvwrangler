@@ -21,6 +21,8 @@ namespace CsvWrangler.UnitTests
     /// Test writing to CSV file.
     /// </summary>
     [TestClass]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
     public class TestWriteCsv
     {
         /// <summary>
@@ -28,10 +30,6 @@ namespace CsvWrangler.UnitTests
         /// </summary>
         private readonly WriteTestSteps steps = new WriteTestSteps();
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void write_csv_with_header()
         {
@@ -41,10 +39,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void dates_in_csv_default_to_invariant_culture()
         {
@@ -53,10 +47,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_date_fields_to_be_persisted_using_invariant_culture(useHeader: true);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void dates_should_be_serialized_with_specified_date_format()
         {
@@ -66,10 +56,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void culture_info_should_be_used_for_date_time_serialization_when_provided()
         {
@@ -79,10 +65,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, cultureInfo: cultureInfo);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void date_time_string_format_takes_precedence_over_culture_info_in_options()
         {
@@ -96,10 +78,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void culture_info_is_taken_in_to_account_when_serializing_numbers()
         {

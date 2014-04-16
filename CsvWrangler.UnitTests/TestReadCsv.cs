@@ -20,6 +20,8 @@ namespace CsvWrangler.UnitTests
     /// Test reading CSV files.
     /// </summary>
     [TestClass]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
     public class TestReadCsv
     {
         /// <summary>
@@ -36,10 +38,6 @@ namespace CsvWrangler.UnitTests
             this.steps.Reset();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void read_properly_formatted_csv_file()
         {
@@ -50,10 +48,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_property_value_to_be_the_same_as_in_corresponding_cell();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void enumeration_of_item_yields_cell_values()
         {
@@ -62,10 +56,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_enumeration_of_item_to_yield_cells(hasHeader: true);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void item_can_be_explicitly_cast_to_dictionary()
         {
@@ -74,10 +64,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_that_each_item_can_be_cast_to_dictionary();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void item_can_be_cast_to_collection()
         {
@@ -86,10 +72,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_that_each_item_behaves_as_collection();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void space_removed_from_header()
         {
@@ -98,10 +80,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_item_properties_to_correspond_to_headers();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void replace_headers_not_macthing_rules_with_generic_name()
         {
@@ -110,10 +88,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_item_properties_to_correspond_to_headers();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void rows_of_csv_without_headers_are_converted_to_lists()
         {
@@ -125,10 +99,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_enumeration_of_item_to_yield_cells(hasHeader: false);
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void empty_file_produces_empty_list()
         {
@@ -137,10 +107,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_zero_items_in_the_result();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void new_column_can_be_added_to_read_csv()
         {
@@ -150,10 +116,6 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_values_set_for_new_column_to_be_retained();
         }
 
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented",
-            Justification = "Unit test naming convention.")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter",
-            Justification = "Unit test naming convention.")]
         [TestMethod]
         public void column_can_be_removed_from_read_csv()
         {

@@ -27,7 +27,7 @@ namespace CsvWrangler
         /// <summary>
         /// List of parameters that is used to find ToString method that accepts culture info.
         /// </summary>
-        private static readonly Type[] CultureSensitiveToStringParameters = new[] { typeof(CultureInfo) };
+        private static readonly Type[] CultureSensitiveToStringParameters = { typeof(CultureInfo) };
 
         /// <summary>
         /// Convert list of object of the same type to CSV.

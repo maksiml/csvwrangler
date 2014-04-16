@@ -26,6 +26,7 @@ namespace CsvWrangler.UnitTests
     /// <summary>
     /// Step definitions for CSV Wrangler tests.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
     internal class ReadTestsSteps
     {
         /// <summary>
@@ -72,7 +73,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Create properly formatted CSV with header.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_properly_formatted_csv_with_header()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with header.");
@@ -92,7 +92,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a properly formatted CSV file with headers that have spaces.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_csv_with_header_with_space()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with headers that have spaces.");
@@ -111,7 +110,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a properly formatted CSV file with headers that contain C# keywords.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_csv_with_header_not_matching_identifier_rules()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with headers that do not match rules.");
@@ -130,7 +128,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a CSV without header.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_csv_without_header()
         {
             Console.WriteLine("Given there is a CSV without header.");
@@ -149,7 +146,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is an empty source CSV.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_empty_csv()
         {
             Console.WriteLine("Given there is an empty source CSV.");
@@ -160,7 +156,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Parse CSV.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_csv_is_parsed()
         {
             Console.WriteLine("When the CSV is parsed.");
@@ -173,7 +168,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// When the CSV without header is parsed.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_csv_without_header_is_parsed()
         {
             Console.WriteLine("When the CSV without header is parsed.");
@@ -186,7 +180,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// When new column is added to the read result.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_new_column_is_added_to_read_result()
         {
             Console.WriteLine("When new column is added to the read result.");
@@ -199,7 +192,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// When column is removed from the read results.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_column_is_removed_from_read_result()
         {
             Console.WriteLine("When column is removed from the read results.");
@@ -212,7 +204,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect property values to be the same as in corresponding cells.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_property_value_to_be_the_same_as_in_corresponding_cell()
         {
             List<string> headerRow = this.TestData[0];
@@ -235,7 +226,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="hasHeader">
         /// Indicates if source CSV has a header.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_enumeration_of_item_to_yield_cells(bool hasHeader)
         {
             Console.WriteLine("Expect enumeration of the items that result from parsing of CSV to yield cell values.");
@@ -255,7 +245,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect that each item can be explicitly cast to dictionary.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_that_each_item_can_be_cast_to_dictionary()
         {
             Console.WriteLine("Expect that each item can be explicitly cast to dictionary.");
@@ -285,7 +274,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect that each item behaves as collection.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_that_each_item_behaves_as_collection()
         {
             Console.WriteLine("Expect that each item behaves as collection.");
@@ -311,7 +299,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect each item to have a property per header with corresponding name.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_item_properties_to_correspond_to_headers()
         {
             Console.WriteLine("Expect each item to have a property per header with corresponding name.");
@@ -338,7 +325,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="useHeader">
         /// Indicates if the CSV has header or not.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_correct_count_of_items(bool useHeader)
         {
             Console.WriteLine("Expect resulting enumeration to count all rows except header.");
@@ -348,7 +334,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect each row to be a list of string values.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_each_row_to_be_a_list_of_string_values()
         {
             Console.WriteLine("Expect each row to be a list of string values.");
@@ -358,7 +343,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// The expect_zero_items_in_the_result.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_zero_items_in_the_result()
         {
             Console.WriteLine("Expect 0 items to be in the result.");
@@ -369,7 +353,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect values that for new column to be retained in items..
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_values_set_for_new_column_to_be_retained()
         {
             Console.WriteLine("Expect values that for new column to be retained in items.");
@@ -383,7 +366,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect none of the items to have the removed column.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_none_of_the_items_to_have_removed_column()
         {
             Console.WriteLine("Expect none of the items to have the removed column.");

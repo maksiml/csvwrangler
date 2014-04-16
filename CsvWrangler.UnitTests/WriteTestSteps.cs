@@ -26,6 +26,7 @@ namespace CsvWrangler.UnitTests
     /// <summary>
     /// The steps used in CSV writer tests.
     /// </summary>
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
     internal class WriteTestSteps
     {
         /// <summary>
@@ -71,7 +72,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a list of items of the same type.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_list_of_same_type_items()
         {
             Console.WriteLine("Given there is a list of items of the same type.");
@@ -92,7 +92,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a list of items of type that has DateTime field.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_list_of_items_of_type_that_has_date_property()
         {
             Console.WriteLine("Given there is a list of items of type that has DateTime field");
@@ -102,7 +101,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Given there is a list of items of type that has 'double' property.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void given_there_is_a_list_of_items_of_type_that_has_double_property()
         {
             Console.WriteLine("Given there is a list of items of type that has 'double' property");
@@ -115,7 +113,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="options">
         /// The options for serializations.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void when_the_list_is_persisted_to_csv(CsvWriterOptions options = null)
         {
             Console.WriteLine("When the list is converted to CSV.");
@@ -146,7 +143,6 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// Expect the CSV to have a header that contains expected header values.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_csv_to_have_a_header_that_contains_expected_value()
         {
             Console.WriteLine("Expect the CSV to have a header that contains expected header values.");
@@ -161,7 +157,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="useHeader">
         /// Indicates if the CSV is expected to have a header.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_each_line_in_csv_to_correspond_to_the_respective_item(bool useHeader)
         {
             Console.WriteLine("Expect that each item is converted to the corresponding line in the CSV.");
@@ -179,7 +174,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="useHeader">
         /// Indicates if the CSV is expected to have a header.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_date_fields_to_be_persisted_using_invariant_culture(bool useHeader)
         {
             Console.WriteLine("Expect the date field to be formatted using invariant culture");
@@ -198,7 +192,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="cultureInfo">
         /// The culture info.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_date_field_be_persited_using_provided_format(bool useHeader, string dateTimeFormat = null, CultureInfo cultureInfo = null)
         {
             Console.WriteLine("Expect the date field to be formatted using provided format");
@@ -214,7 +207,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="cultureInfo">
         /// The culture info.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         public void expect_double_to_be_persisted_using_provided_format(bool useHeader, CultureInfo cultureInfo = null)
         {
             Console.WriteLine("Expect the double field to be serialized with provided format");
@@ -237,7 +229,6 @@ namespace CsvWrangler.UnitTests
         /// <param name="cultureInfo">
         /// The culture info.
         /// </param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
         private void expect_date_field_be_persited_using_correct_format(bool useHeader, string dateTimeFormat = null, CultureInfo cultureInfo = null)
         {
             var line = this.GetFirstRow(useHeader);
@@ -283,6 +274,7 @@ namespace CsvWrangler.UnitTests
             /// <summary>
             /// Gets or sets the date time field.
             /// </summary>
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public DateTime DateTime { get; set; }
         }
 
@@ -294,6 +286,7 @@ namespace CsvWrangler.UnitTests
             /// <summary>
             /// Gets or sets the double property.
             /// </summary>
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public double Double { get; set; }
         }
     }
