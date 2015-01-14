@@ -27,6 +27,11 @@ namespace CsvWrangler
         private static readonly Regex AllowedHeaderNames = new Regex("^[_a-zA-Z][_0-9a-zA-Z]*$");
 
         /// <summary>
+        /// Matches quotes surrounding expression.
+        /// </summary>
+        private static readonly Regex MatchSurroundingQuotes = new Regex("^[\"|'|«](?<header>.*)[\"|'|»]$");
+
+        /// <summary>
         /// Parse CSV file to list of dynamic objects.
         /// </summary>
         /// <param name="input">
@@ -63,7 +68,7 @@ namespace CsvWrangler
                 {
                     headers = line
                                 .Split(Separator)
-                                .Select(header => header.ToTitleCase().Replace(" ", string.Empty))
+                                .Select(TransformHeaderNameToPropertyName)
                                 .ToList();
                     for (int i = 0; i < headers.Count; i++)
                     {
@@ -93,6 +98,26 @@ namespace CsvWrangler
                     line = reader.ReadLine();
                 }
             }
+        }
+
+        /// <summary>
+        /// Transforms header name to valid C# identifier if possible.
+        /// </summary>
+        /// <param name="headerName">
+        /// The header name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private static string TransformHeaderNameToPropertyName(string headerName)
+        {
+            string result = headerName.ToTitleCase().Replace(" ", string.Empty);
+            if (MatchSurroundingQuotes.IsMatch(headerName))
+            {
+                result = MatchSurroundingQuotes.Match(headerName).Groups["header"].ToString().ToTitleCase();
+            }
+
+            return result;
         }
     }
 }

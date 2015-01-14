@@ -81,6 +81,14 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
+        public void surrounding_quotes_are_removed_from_header()
+        {
+            this.steps.given_there_is_a_csv_with_header_with_quotes();
+            this.steps.when_csv_is_parsed();
+            this.steps.expect_item_properties_to_correspond_to_headers();
+        }
+
+        [TestMethod]
         public void replace_headers_not_macthing_rules_with_generic_name()
         {
             this.steps.given_there_is_a_csv_with_header_not_matching_identifier_rules();
