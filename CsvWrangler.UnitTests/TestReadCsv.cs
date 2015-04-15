@@ -140,6 +140,16 @@ namespace CsvWrangler.UnitTests
             this.steps.when_first_line_is_read();
             this.steps.expect_there_are_no_exceptions();
         }
+
+        [TestMethod]
+        public void read_data_with_non_default_separator()
+        {
+            this.steps.given_there_is_properly_formatted_csv_with_header_and_tabs_as_separator();
+            this.steps.when_csv_is_parsed(new CsvReaderOptions { Separator = '\t' });
+            this.steps.expect_correct_count_of_items(useHeader: true);
+            this.steps.expect_item_properties_to_correspond_to_headers();
+            this.steps.expect_property_value_to_be_the_same_as_in_corresponding_cell();
+        }
     }
 
     // ReSharper restore InconsistentNaming

@@ -55,7 +55,7 @@ namespace CsvWrangler
 
             using (TextReader reader = new StreamReader(input))
             {
-                const char Separator = ',';
+                char separator = options.Separator;
 
                 List<string> headers;
                 string line = reader.ReadLine();
@@ -67,7 +67,7 @@ namespace CsvWrangler
                 if (hasHeader)
                 {
                     headers = line
-                                .Split(Separator)
+                                .Split(separator)
                                 .Select(TransformHeaderNameToPropertyName)
                                 .ToList();
                     for (int i = 0; i < headers.Count; i++)
@@ -83,7 +83,7 @@ namespace CsvWrangler
                 else
                 {
                     headers = new List<string>();
-                    int headerCount = line.Split(Separator).Length;
+                    int headerCount = line.Split(separator).Length;
                     for (int i = 0; i < headerCount; i++)
                     {
                         headers.Add(string.Format("Column{0}", i));
@@ -92,7 +92,7 @@ namespace CsvWrangler
 
                 while (line != null)
                 {
-                    string[] values = line.Split(Separator);
+                    string[] values = line.Split(separator);
                     dynamic lineObject = new CsvRow(headers, values.ToList(), options);
                     yield return lineObject;
                     line = reader.ReadLine();

@@ -81,17 +81,13 @@ namespace CsvWrangler.UnitTests
         public void given_there_is_properly_formatted_csv_with_header()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with header.");
-            this.TestData = new List<List<string>>
-                                {
-                                    new List<string> { "head1", "head2", "head3" },
-                                    new List<string> { "val11", "val12", "val13" },
-                                    new List<string> { "val21", "val22", "val23" },
-                                };
-            this.ExpectedHeaders = new List<string>
-                                  {
-                                      "Head1", "Head2", "Head3"
-                                  };
-            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
+            this.CreateProperlyFormattedCsv(',');
+        }
+
+        public void given_there_is_properly_formatted_csv_with_header_and_tabs_as_separator()
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with header and tabs as separator.");
+            this.CreateProperlyFormattedCsv('\t');
         }
 
         /// <summary>
@@ -466,6 +462,21 @@ namespace CsvWrangler.UnitTests
                 Assert.AreEqual(expectedValues[expectedCount], actualValue);
                 expectedCount++;
             }
+        }
+
+        private void CreateProperlyFormattedCsv(char separator)
+        {
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { "head1", "head2", "head3" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                    new List<string> { "val21", "val22", "val23" },
+                                };
+            this.ExpectedHeaders = new List<string>
+                                  {
+                                      "Head1", "Head2", "Head3"
+                                  };
+            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(separator.ToString(), row)));
         }
     }
     // ReSharper restore InconsistentNaming
