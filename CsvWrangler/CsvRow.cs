@@ -18,12 +18,19 @@ namespace CsvWrangler
     /// <summary>
     /// Represents row retrieved from CSV file.
     /// </summary>
-    internal class CsvRow : DynamicObject, IEnumerable<string>, IDictionary<string, string>
+    public class CsvRow : DynamicObject, IEnumerable<string>, IDictionary<string, string>
     {
         /// <summary>
         /// The map of header names to values.
         /// </summary>
         private readonly Dictionary<string, string> values = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CsvRow"/> class.
+        /// </summary>
+        public CsvRow()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CsvRow"/> class.
