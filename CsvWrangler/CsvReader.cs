@@ -57,15 +57,16 @@ namespace CsvWrangler
             {
                 char separator = options.Separator;
 
-                List<string> headers;
-                string line = reader.ReadLine();
-                if (line == null)
-                {
-                    yield break;
-                }
+                List<string> headers = null;
 
                 if (hasHeader)
                 {
+                    string line = reader.ReadLine();
+                    if (line == null)
+                    {
+                        yield break;
+                    }
+
                     headers = line
                                 .Split(separator)
                                 .Select(TransformHeaderNameToPropertyName)
@@ -77,25 +78,24 @@ namespace CsvWrangler
                             headers[i] = string.Format("Column{0}", i);
                         }
                     }
-
-                    line = reader.ReadLine();
                 }
-                else
+
+                List<string> values = CsvParser.ParseLine(reader, separator).ToList();
+                while (values.Any())
                 {
-                    headers = new List<string>();
-                    int headerCount = line.Split(separator).Length;
-                    for (int i = 0; i < headerCount; i++)
+                    if (headers == null)
                     {
-                        headers.Add(string.Format("Column{0}", i));
+                        headers = new List<string>();
+                        var headerCount = values.Count;
+                        for (int i = 0; i < headerCount; i++)
+                        {
+                            headers.Add(string.Format("Column{0}", i));
+                        }
                     }
-                }
 
-                while (line != null)
-                {
-                    string[] values = line.Split(separator);
-                    dynamic lineObject = new CsvRow(headers, values.ToList(), options);
+                    dynamic lineObject = new CsvRow(headers, values, options);
                     yield return lineObject;
-                    line = reader.ReadLine();
+                    values = CsvParser.ParseLine(reader, separator).ToList();
                 }
             }
         }

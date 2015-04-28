@@ -8,6 +8,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable RedundantArgumentNameForLiteralExpression
 namespace CsvWrangler.UnitTests
 {
     using System.Diagnostics.CodeAnalysis;
