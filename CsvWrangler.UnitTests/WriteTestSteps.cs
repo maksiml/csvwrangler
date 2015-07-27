@@ -27,6 +27,7 @@ namespace CsvWrangler.UnitTests
     /// The steps used in CSV writer tests.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Test naming convention.")]
     internal class WriteTestSteps
     {
         /// <summary>
@@ -86,6 +87,34 @@ namespace CsvWrangler.UnitTests
                                     {
                                         "val11,val12,val13",
                                         "val21,val22,val23"
+                                    };
+        }
+        
+        public void given_there_are_some_values_with_separator()
+        {
+            Console.WriteLine("Given there is a list of that contain separator.");
+            var result = new List<dynamic>
+                {
+                    new { Head1 = "val11,val11", Head2 = "val12,val12", Head3 = "val13,val13" }
+                };
+            this.items = result.Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
+            this.expectedLines = new[]
+                                    {
+                                        "\"val11,val11\",\"val12,val12\",\"val13,val13\""
+                                    };
+        }
+
+        public void given_there_are_some_values_with_new_line_characters()
+        {
+            Console.WriteLine("Given there is a list of that contain new line characters.");
+            var result = new List<dynamic>
+                {
+                    new { Head1 = "val11\nval11", Head2 = "val12\r\nval12", Head3 = "val13\rval13" }
+                };
+            this.items = result.Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
+            this.expectedLines = new[]
+                                    {
+                                        "\"val11\nval11\",\"val12\r\nval12\",\"val13\rval13\""
                                     };
         }
 
@@ -160,11 +189,28 @@ namespace CsvWrangler.UnitTests
         public void expect_each_line_in_csv_to_correspond_to_the_respective_item(bool useHeader)
         {
             Console.WriteLine("Expect that each item is converted to the corresponding line in the CSV.");
-            string[] lines = this.csv.Split('\n');
-            Assert.IsTrue((useHeader ? lines.Length - 1 : lines.Length) == this.expectedLines.Length);
-            for (int i = 0; i < this.expectedLines.Length; i++)
+            using (TextReader reader = new StreamReader(this.csv.ToStream()))
             {
-                Assert.AreEqual(this.expectedLines[i], lines[useHeader ? i + 1 : i]);
+                var actualLine = CsvParser.ParseLine(reader, ',').ToList();
+                if (useHeader)
+                {
+                    actualLine = CsvParser.ParseLine(reader, ',').ToList();
+                }
+
+                foreach (string currentLine in this.expectedLines)
+                {
+                    Assert.IsTrue(actualLine.Any());
+                    var expectedLine = CsvParser.ParseLine(new StreamReader(currentLine.ToStream()), ',').ToList();
+                    Assert.AreEqual(expectedLine.Count, actualLine.Count);
+                    for (int j = 0; j < expectedLine.Count; j++)
+                    {
+                        Assert.AreEqual(expectedLine[j], actualLine[j]);
+                    }
+
+                    actualLine = CsvParser.ParseLine(reader, ',').ToList();
+                }
+
+                Assert.IsFalse(actualLine.Any());
             }
         }
 
@@ -210,7 +256,7 @@ namespace CsvWrangler.UnitTests
         public void expect_double_to_be_persisted_using_provided_format(bool useHeader, CultureInfo cultureInfo = null)
         {
             Console.WriteLine("Expect the double field to be serialized with provided format");
-            var line = this.GetFirstRow(useHeader);
+            var line = this.GetFirstRow(useHeader).Replace("\"", string.Empty);
             string expectedValue = cultureInfo != null
                                        ? ExpectedDoubleValue.ToString(cultureInfo)
                                        : ExpectedDoubleValue.ToString(CultureInfo.InvariantCulture);

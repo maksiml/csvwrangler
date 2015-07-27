@@ -16,7 +16,7 @@ namespace CsvWrangler
     /// <summary>
     /// The CSV parser.
     /// </summary>
-    internal static class CsvParser
+    public static class CsvParser
     {
         /// <summary>
         /// States for parsers state machine.

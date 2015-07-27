@@ -88,6 +88,22 @@ namespace CsvWrangler.UnitTests
                 });
             this.steps.expect_double_to_be_persisted_using_provided_format(useHeader: true, cultureInfo: CultureInfo.GetCultureInfo("lt-LT"));
         }
+
+        [TestMethod]
+        public void values_with_separator_should_be_quoted()
+        {
+            this.steps.given_there_are_some_values_with_separator();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
+
+        [TestMethod]
+        public void values_with_new_line_should_be_quoted()
+        {
+            this.steps.given_there_are_some_values_with_new_line_characters();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
     }
 
     // ReSharper restore InconsistentNaming

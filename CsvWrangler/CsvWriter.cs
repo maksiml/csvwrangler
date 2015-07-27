@@ -78,7 +78,13 @@ namespace CsvWrangler
                             value = toStringMethod.Invoke(value, new object[] { options.CultureInfo });
                         }
 
-                        stringBuilder.Append(value);
+                        string stringValue = value.ToString();
+                        if (stringValue.IndexOfAny(new[] { ',', '\r', '\n' }) > 0)
+                        {
+                            stringValue = string.Format("\"{0}\"", stringValue);
+                        }
+
+                        stringBuilder.Append(stringValue);
                     }
                     
                     if (i < properties.Length - 1)
