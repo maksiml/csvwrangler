@@ -93,6 +93,14 @@ namespace CsvWrangler
                 {
                     case ParserStates.ValueStart:
                         {
+                            // it is an empty string at the end of the line.
+                            if (line.Length == character)
+                            {
+                                yield return string.Empty;
+                                state = ParserStates.LineEnd;
+                                continue;
+                            }
+
                             if (line[character] == '\"')
                             {
                                 state = ParserStates.QuotedStart;

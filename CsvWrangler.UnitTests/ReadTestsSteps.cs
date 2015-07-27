@@ -169,6 +169,15 @@ namespace CsvWrangler.UnitTests
             this.TestData = new List<List<string>>();
         }
 
+        public void given_there_is_a_line_ending_with_empty_string_value()
+        {
+            Console.WriteLine("Given there is a line ending with an empty string value.");
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { string.Empty, string.Empty, string.Empty }
+                                };
+        }
+
         public void given_there_is_a_csv_with_header_and_mismatched_row()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with header and some row misses cells.");

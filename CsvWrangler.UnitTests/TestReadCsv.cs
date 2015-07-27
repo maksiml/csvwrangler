@@ -1,17 +1,18 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TestReadCsv.cs" company="CsvWrangler">
 //   This file is a part of CsvWrangler and is licensed under the MS-PL.
-//   http://www.opensource.org/licenses/ms-pl.html
+//   //   http://www.opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
 //   Test reading CSV files.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable RedundantArgumentNameForLiteralExpression
 namespace CsvWrangler.UnitTests
 {
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -150,6 +151,13 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_correct_count_of_items(useHeader: true);
             this.steps.expect_item_properties_to_correspond_to_headers();
             this.steps.expect_property_value_to_be_the_same_as_in_corresponding_cell();
+        }
+
+        [TestMethod]
+        public void read_line_terminated_with_empty_string()
+        {
+            var row = (IEnumerable<string>)CsvReader.Parse("test1,".ToStream(), hasHeader: false).First();
+            Assert.AreEqual(2, row.Count());
         }
     }
 
