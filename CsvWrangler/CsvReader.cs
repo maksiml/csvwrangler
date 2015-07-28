@@ -7,7 +7,6 @@
 //   The CSV reader.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace CsvWrangler
 {
     using System.Collections.Generic;
@@ -57,7 +56,7 @@ namespace CsvWrangler
             {
                 char separator = options.Separator;
 
-                List<string> headers = null;
+                List<string> headers = new List<string>();
 
                 if (hasHeader)
                 {
@@ -67,23 +66,35 @@ namespace CsvWrangler
                         yield break;
                     }
 
-                    headers = line
-                                .Split(separator)
-                                .Select(TransformHeaderNameToPropertyName)
-                                .ToList();
-                    for (int i = 0; i < headers.Count; i++)
+                    var headerRowComponents = line.Split(separator);
+                    for (int i = 0; i < headerRowComponents.Length; i++)
                     {
-                        if (!AllowedHeaderNames.IsMatch(headers[i]))
+                        string currentHeader = TransformHeaderNameToPropertyName(headerRowComponents[i]);
+                        currentHeader = AllowedHeaderNames.IsMatch(currentHeader) ? currentHeader : null;
+                        if (options.ResolveHeaderName != null)
                         {
-                            headers[i] = string.Format("Column{0}", i);
+                            var currentHeaderReplacement = options.ResolveHeaderName(
+                                headerRowComponents[i], 
+                                currentHeader);
+
+                            currentHeader = string.IsNullOrEmpty(currentHeaderReplacement)
+                                                ? currentHeader
+                                                : currentHeaderReplacement;
                         }
+
+                        if (string.IsNullOrEmpty(currentHeader))
+                        {
+                            currentHeader = string.Format("Column{0}", i);
+                        }
+
+                        headers.Add(currentHeader);
                     }
                 }
 
                 List<string> values = CsvParser.ParseLine(reader, separator).ToList();
                 while (values.Any())
                 {
-                    if (headers == null)
+                    if (!headers.Any())
                     {
                         headers = new List<string>();
                         var headerCount = values.Count;

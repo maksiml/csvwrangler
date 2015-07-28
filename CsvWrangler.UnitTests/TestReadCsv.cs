@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TestReadCsv.cs" company="CsvWrangler">
 //   This file is a part of CsvWrangler and is licensed under the MS-PL.
-//   //   http://www.opensource.org/licenses/ms-pl.html
+//   http://www.opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
 //   Test reading CSV files.
@@ -158,6 +158,54 @@ namespace CsvWrangler.UnitTests
         {
             var row = (IEnumerable<string>)CsvReader.Parse("test1,".ToStream(), hasHeader: false).First();
             Assert.AreEqual(2, row.Count());
+        }
+
+        [TestMethod]
+        public void use_user_provided_header_name_when_available()
+        {
+            string csv = "Header1,Header2,Header3\n" +
+                         "Value1,Value2,Value3";
+            int counter = 0;
+            var options = new CsvReaderOptions
+                              {
+                                  ResolveHeaderName = (name, suggestedName) => string.Format("H{0}", ++counter)
+                              };
+            var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
+            Assert.AreEqual("H1,H2,H3", string.Join(",", actual));
+        }
+
+        [TestMethod]
+        public void use_generated_header_when_resolve_header_name_handler_returns_null()
+        {
+            string csv = "Header1,Header2,Header3\n" +
+                         "Value1,Value2,Value3";
+            int counter = 0;
+            var options = new CsvReaderOptions
+            {
+                ResolveHeaderName = (name, suggestedName) =>
+                    {
+                        counter++;
+                        return counter == 1 ? null : string.Format("H{0}", counter);
+                    }
+            };
+            var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
+            Assert.AreEqual("Header1,H2,H3", string.Join(",", actual));
+        }
+
+        [TestMethod]
+        public void unsuitable_header_passed_as_null_to_resolve_header_name_handler()
+        {
+            string csv = "Тест\nValue1";
+            var options = new CsvReaderOptions
+            {
+                ResolveHeaderName = (name, suggestedName) =>
+                {
+                    Assert.IsNull(suggestedName);
+                    return null;
+                }
+            };
+            var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
+            Assert.AreEqual("Column0", string.Join(",", actual));
         }
     }
 
