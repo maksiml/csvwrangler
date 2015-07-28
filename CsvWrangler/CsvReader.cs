@@ -60,14 +60,13 @@ namespace CsvWrangler
 
                 if (hasHeader)
                 {
-                    string line = reader.ReadLine();
-                    if (line == null)
+                    var headerRowComponents = CsvParser.ParseLine(reader, options.Separator).ToList();
+                    if (!headerRowComponents.Any())
                     {
                         yield break;
                     }
 
-                    var headerRowComponents = line.Split(separator);
-                    for (int i = 0; i < headerRowComponents.Length; i++)
+                    for (int i = 0; i < headerRowComponents.Count; i++)
                     {
                         string currentHeader = TransformHeaderNameToPropertyName(headerRowComponents[i]);
                         currentHeader = AllowedHeaderNames.IsMatch(currentHeader) ? currentHeader : null;

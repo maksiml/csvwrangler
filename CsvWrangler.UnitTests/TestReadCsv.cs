@@ -207,6 +207,15 @@ namespace CsvWrangler.UnitTests
             var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
             Assert.AreEqual("Column0", string.Join(",", actual));
         }
+
+        [TestMethod]
+        public void headers_with_separators_are_treated_as_single_value()
+        {
+            string csv = "\"Header1,1\"\nValue1";
+            var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream()).First()).Keys;
+            Assert.AreEqual(1, actual.Count);
+            Assert.AreEqual("Column0", string.Join(",", actual));
+        }
     }
 
     // ReSharper restore InconsistentNaming
