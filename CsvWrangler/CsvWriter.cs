@@ -52,12 +52,18 @@ namespace CsvWrangler
                 options = new CsvWriterOptions();
             }
 
-            Type sourceType = typeof(T);
-            PropertyInfo[] properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+            Type sourceType = null;
+            PropertyInfo[] properties = null;
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(string.Join(",", properties.Select(property => property.Name)));
             foreach (var item in items)
             {
+                if (sourceType == null)
+                {
+                    sourceType = item.GetType();
+                    properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+                    stringBuilder.Append(string.Join(",", properties.Select(property => property.Name)));
+                }
+
                 stringBuilder.Append("\n");
                 for (int i = 0; i < properties.Length; i++)
                 {

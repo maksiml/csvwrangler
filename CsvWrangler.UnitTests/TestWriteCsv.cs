@@ -104,6 +104,15 @@ namespace CsvWrangler.UnitTests
             this.steps.when_the_list_is_persisted_to_csv();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
+
+        [TestMethod]
+        public void dynamic_objects_can_be_serialized_successfully()
+        {
+            this.steps.given_there_is_a_list_of_dynamic_items();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
     }
 
     // ReSharper restore InconsistentNaming

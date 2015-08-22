@@ -53,7 +53,9 @@ namespace CsvWrangler.UnitTests
         /// <summary>
         /// The double test items.
         /// </summary>
-        private IEnumerable<DoubleTestItem> doubleTestItems; 
+        private IEnumerable<DoubleTestItem> doubleTestItems;
+
+        private IEnumerable<dynamic> dynamicTestItems; 
 
         /// <summary>
         /// The resulting CSV.
@@ -76,20 +78,9 @@ namespace CsvWrangler.UnitTests
         public void given_there_is_a_list_of_same_type_items()
         {
             Console.WriteLine("Given there is a list of items of the same type.");
-            var result = new List<dynamic>
-                {
-                    new { Head1 = "val11", Head2 = "val12", Head3 = "val13" },
-                    new { Head1 = "val21", Head2 = "val22", Head3 = "val23" }
-                };
-            this.items = result.Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
-            this.expectedHeaders = "Head1,Head2,Head3";
-            this.expectedLines = new[]
-                                    {
-                                        "val11,val12,val13",
-                                        "val21,val22,val23"
-                                    };
+            this.items = this.CreateItems().Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
         }
-        
+       
         public void given_there_are_some_values_with_separator()
         {
             Console.WriteLine("Given there is a list of that contain separator.");
@@ -136,6 +127,12 @@ namespace CsvWrangler.UnitTests
             this.doubleTestItems = new List<DoubleTestItem> { new DoubleTestItem { Double = ExpectedDoubleValue } };
         }
 
+        public void given_there_is_a_list_of_dynamic_items()
+        {
+            Console.WriteLine("Given there is a list of dynamic items.");
+            this.dynamicTestItems = this.CreateItems();
+        }
+
         /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
@@ -157,6 +154,10 @@ namespace CsvWrangler.UnitTests
             else if (this.doubleTestItems != null)
             {
                 stream = CsvWriter.ToCsv(this.doubleTestItems, options);
+            }
+            else if (this.dynamicTestItems != null)
+            {
+                stream = CsvWriter.ToCsv(this.dynamicTestItems, options);
             }
             else
             {
@@ -293,6 +294,22 @@ namespace CsvWrangler.UnitTests
             }
 
             Assert.AreEqual(expectedValue, line);
+        }
+
+        private List<dynamic> CreateItems()
+        {
+            var result = new List<dynamic>
+                {
+                    new { Head1 = "val11", Head2 = "val12", Head3 = "val13" },
+                    new { Head1 = "val21", Head2 = "val22", Head3 = "val23" }
+                };
+            this.expectedHeaders = "Head1,Head2,Head3";
+            this.expectedLines = new[]
+                                    {
+                                        "val11,val12,val13",
+                                        "val21,val22,val23"
+                                    };
+            return result;
         }
 
         /// <summary>
