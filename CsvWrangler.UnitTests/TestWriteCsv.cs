@@ -40,6 +40,16 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
+        public void items_are_read_one_by_one()
+        {
+            this.steps.given_there_is_a_list_with_read_counter();
+            this.steps.when_header_and_first_line_are_read();
+
+            // The two read lines accounts for the fact that writer logic reads one line ahead.
+            this.steps.expect_item_read_counter_to_be(2);
+        }
+
+        [TestMethod]
         public void dates_in_csv_default_to_invariant_culture()
         {
             this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();

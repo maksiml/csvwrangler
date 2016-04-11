@@ -50,6 +50,7 @@
     <Compile Include="CsvRow.cs" />
     <Compile Include="CsvWriter.cs" />
     <Compile Include="CsvWriterOptions.cs" />
+    <Compile Include="StringListStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>

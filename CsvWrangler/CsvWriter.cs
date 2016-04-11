@@ -8,6 +8,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// ReSharper disable UseStringInterpolation
 namespace CsvWrangler
 {
     using System;
@@ -52,6 +53,26 @@ namespace CsvWrangler
                 options = new CsvWriterOptions();
             }
 
+            return new StringListStream(GetStrings(items, options));
+        }
+
+        /// <summary>
+        /// Convert list of objects of the same type to list of strings.
+        /// </summary>
+        /// <param name="items">
+        /// The items.
+        /// </param>
+        /// <param name="options">
+        /// Options for data serialization.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of the item in the list.
+        /// </typeparam>
+        /// <returns>
+        /// List of serialized objects.
+        /// </returns>
+        private static IEnumerator<string> GetStrings<T>(IEnumerable<T> items, CsvWriterOptions options)
+        {
             Type sourceType = null;
             PropertyInfo[] properties = null;
             var stringBuilder = new StringBuilder();
@@ -64,7 +85,9 @@ namespace CsvWrangler
                     stringBuilder.Append(string.Join(",", properties.Select(property => property.Name)));
                 }
 
-                stringBuilder.Append("\n");
+                yield return stringBuilder.ToString();
+                stringBuilder.Clear();
+                stringBuilder.Append('\n');
                 for (int i = 0; i < properties.Length; i++)
                 {
                     if (properties[i].PropertyType == typeof(DateTime))
@@ -92,7 +115,7 @@ namespace CsvWrangler
 
                         stringBuilder.Append(stringValue);
                     }
-                    
+
                     if (i < properties.Length - 1)
                     {
                         stringBuilder.Append(',');
@@ -100,7 +123,7 @@ namespace CsvWrangler
                 }
             }
 
-            return stringBuilder.ToString().ToStream();
-        }
+            yield return stringBuilder.ToString();
+        }  
     }
 }

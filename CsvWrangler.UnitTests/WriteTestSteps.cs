@@ -16,6 +16,7 @@ namespace CsvWrangler.UnitTests
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Text;
 
     using ImpromptuInterface;
 
@@ -55,7 +56,9 @@ namespace CsvWrangler.UnitTests
         /// </summary>
         private IEnumerable<DoubleTestItem> doubleTestItems;
 
-        private IEnumerable<dynamic> dynamicTestItems; 
+        private IEnumerable<dynamic> dynamicTestItems;
+
+        private TestItemGenerator testItemGenerator;
 
         /// <summary>
         /// The resulting CSV.
@@ -80,7 +83,31 @@ namespace CsvWrangler.UnitTests
             Console.WriteLine("Given there is a list of items of the same type.");
             this.items = this.CreateItems().Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
         }
-       
+
+        public void given_there_is_a_list_with_read_counter()
+        {
+            Console.WriteLine("Given there is a list of items with read counter.");
+            this.testItemGenerator = new TestItemGenerator();
+            this.expectedHeaders = "Head1,Head2,Head3";
+        }
+
+        public void when_header_and_first_line_are_read()
+        {
+            Console.WriteLine("When header and first line are read.");
+
+            // Length of the buffer the length of the header + new line character + length of one line.
+            byte[] buffer = new byte[this.expectedHeaders.Length + 1 + TestItemGenerator.ExpectedLineLength];
+            CsvWriter.ToCsv(this.testItemGenerator).Read(buffer, 0, buffer.Length);
+            var value = Encoding.UTF8.GetString(buffer);
+            Console.WriteLine(value);
+        }
+
+        public void expect_item_read_counter_to_be(int expectedCount)
+        {
+            Console.WriteLine("Expect item read counter to be {0}.", expectedCount);
+            Assert.AreEqual(expectedCount, this.testItemGenerator.InvocationCount);
+        }
+
         public void given_there_are_some_values_with_separator()
         {
             Console.WriteLine("Given there is a list of that contain separator.");
