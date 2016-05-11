@@ -136,6 +136,20 @@ namespace CsvWrangler.UnitTests
                                     };
         }
 
+        public void given_there_are_some_values_starting_with_new_line_characters()
+        {
+            Console.WriteLine("Given there is a list of that contain new line characters.");
+            var result = new List<dynamic>
+                {
+                    new { Head1 = "\nval11\nval11", Head2 = "val12\r\nval12", Head3 = "val13\rval13" }
+                };
+            this.items = result.Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
+            this.expectedLines = new[]
+                                    {
+                                        "\"\nval11\nval11\",\"val12\r\nval12\",\"val13\rval13\""
+                                    };
+        }
+
         /// <summary>
         /// Given there is a list of items of type that has DateTime field.
         /// </summary>

@@ -114,6 +114,14 @@ namespace CsvWrangler.UnitTests
             this.steps.when_the_list_is_persisted_to_csv();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
+        
+        [TestMethod]
+        public void values_starting_with_new_line_should_be_quoted()
+        {
+            this.steps.given_there_are_some_values_starting_with_new_line_characters();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
 
         [TestMethod]
         public void dynamic_objects_can_be_serialized_successfully()
