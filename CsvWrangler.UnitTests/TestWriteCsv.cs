@@ -124,6 +124,14 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
+        public void quotes_must_be_escaped_in_quoted_values()
+        {
+            this.steps.given_there_are_some_values_with_new_line_characters_and_quotes();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
+
+        [TestMethod]
         public void dynamic_objects_can_be_serialized_successfully()
         {
             this.steps.given_there_is_a_list_of_dynamic_items();

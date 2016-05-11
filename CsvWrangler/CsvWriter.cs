@@ -110,7 +110,7 @@ namespace CsvWrangler
                         string stringValue = value.ToString();
                         if (stringValue.IndexOfAny(new[] { ',', '\r', '\n' }) >= 0)
                         {
-                            stringValue = string.Format("\"{0}\"", stringValue);
+                            stringValue = string.Format("\"{0}\"", stringValue.Replace("\"", "\"\""));
                         }
 
                         stringBuilder.Append(stringValue);
