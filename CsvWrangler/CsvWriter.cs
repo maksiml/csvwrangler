@@ -81,7 +81,7 @@ namespace CsvWrangler
                 if (sourceType == null)
                 {
                     sourceType = item.GetType();
-                    properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+                    properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
                     stringBuilder.Append(string.Join(",", properties.Select(property => property.Name)));
                 }
 

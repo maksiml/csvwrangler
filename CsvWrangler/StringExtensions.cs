@@ -11,8 +11,8 @@
 namespace CsvWrangler
 {
     using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
     using System.IO;
+    using System.Text;
 
     /// <summary>
     /// The string extension methods.
@@ -52,7 +52,19 @@ namespace CsvWrangler
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "String conversion sample.")]
         public static string ToTitleCase(this string input)
         {
-            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(input);
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            StringBuilder result = new StringBuilder(input);
+            result[0] = char.ToUpper(result[0]);
+            for (int i = 1; i < result.Length; ++i)
+            {
+                result[i] = char.IsWhiteSpace(result[i - 1]) ? char.ToUpper(result[i]) : char.ToLower(result[i]);
+            }
+
+            return result.ToString();
         }
     }
 }

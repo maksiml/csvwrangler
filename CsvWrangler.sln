@@ -1,13 +1,80 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvWrangler", "CsvWrangler\CsvWrangler.csproj", "{1AE8D766-9053-4E0F-9A32-867163D99C4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvWrangler.UnitTests", "CsvWrangler.UnitTests\CsvWrangler.UnitTests.csproj", "{8A0E081D-B6B5-433D-82CA-390EE449F969}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvWrangler.Universal", "CsvWrangler.Universal\CsvWrangler.Universal.csproj", "{255B2357-54C3-4D4F-A747-3D660C946CE2}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|x64.Build.0 = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|x86.Build.0 = Debug|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|ARM.Build.0 = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|x64.ActiveCfg = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|x64.Build.0 = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|x86.Build.0 = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|x64.Build.0 = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|ARM.Build.0 = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|x64.ActiveCfg = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|x64.Build.0 = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|x86.Build.0 = Release|Any CPU
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|ARM.Build.0 = Debug|ARM
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|x64.ActiveCfg = Debug|x64
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|x64.Build.0 = Debug|x64
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|x86.ActiveCfg = Debug|x86
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Debug|x86.Build.0 = Debug|x86
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|ARM.ActiveCfg = Release|ARM
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|ARM.Build.0 = Release|ARM
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|x64.ActiveCfg = Release|x64
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|x64.Build.0 = Release|x64
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|x86.ActiveCfg = Release|x86
+		{255B2357-54C3-4D4F-A747-3D660C946CE2}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs14
 		SccLocalPath0 = .
@@ -17,22 +84,8 @@ Global
 		SccProjectUniqueName2 = CsvWrangler\\CsvWrangler.csproj
 		SccProjectName2 = CsvWrangler
 		SccLocalPath2 = CsvWrangler
-	EndGlobalSection
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AE8D766-9053-4E0F-9A32-867163D99C4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A0E081D-B6B5-433D-82CA-390EE449F969}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		SccProjectUniqueName3 = CsvWrangler.Universal\\CsvWrangler.Universal.csproj
+		SccProjectName3 = CsvWrangler.Universal
+		SccLocalPath3 = CsvWrangler.Universal
 	EndGlobalSection
 EndGlobal
