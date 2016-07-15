@@ -197,7 +197,7 @@ namespace CsvWrangler
                                 }
                                 else
                                 {
-                                    character += 2;
+                                    character += 1;
                                     state = ParserStates.QuotedDefault;
                                 }
                             }

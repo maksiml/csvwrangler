@@ -100,6 +100,26 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
+        public void multiple_escaped_double_quotes_in_quoted_value_will_be_treated_as_quote()
+        {
+            string input = "val11,\"val121\"\"val122\"\"val123\",val13";
+            string expected = "val11;val121\"val122\"val123;val13";
+            var output = CsvReader.Parse(input.ToStream(), hasHeader: false);
+            string actual = string.Join(";", output.First());
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void escapde_double_quotes_at_the_end_of_quoted_value_will_be_treated_as_quote()
+        {
+            string input = "val11,\"val121\"\"\",val13";
+            string expected = "val11;val121\";val13";
+            var output = CsvReader.Parse(input.ToStream(), hasHeader: false);
+            string actual = string.Join(";", output.First());
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         public void unterminated_double_quoted_values_will_be_treated_as_quoted()
         {
             // This behavior is breaking the standard but we will treat it in a way that makes most sense
