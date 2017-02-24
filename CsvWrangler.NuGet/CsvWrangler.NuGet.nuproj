@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>32555df0-9fc0-40cd-aa82-891d8eb1a732</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NuProjPath Condition=" '$(NuProjPath)' == '' ">$(MSBuildExtensionsPath)\NuProj\</NuProjPath>
+  </PropertyGroup>
+  <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
+  <PropertyGroup Label="Configuration">
+    <Id>CsvWrangler</Id>
+    <Version>1.0.0</Version>
+    <Title>CsvWrangler</Title>
+    <Authors>csvwrangler.net</Authors>
+    <Owners>csvwrangler.net</Owners>
+    <Summary>CSV library</Summary>
+    <Description>.NET library for reading and writing CSV files.</Description>
+    <ReleaseNotes>
+    </ReleaseNotes>
+    <ProjectUrl>http://csvwrangler.net</ProjectUrl>
+    <LicenseUrl>http://www.opensource.org/licenses/ms-pl.html</LicenseUrl>
+    <Copyright>Copyright © 2015-2017 csvwrangler.net</Copyright>
+    <Tags>csv csvwrangler spreadsheet coma-separated</Tags>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CsvWrangler\CsvWrangler.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\LICENSE.TXT">
+      <Link>LICENSE.TXT</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(NuProjPath)\NuProj.targets" />
+</Project>
