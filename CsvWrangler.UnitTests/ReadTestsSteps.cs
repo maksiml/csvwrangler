@@ -120,6 +120,21 @@ namespace CsvWrangler.UnitTests
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
 
+        public void given_there_is_a_csv_with_title_cased_headers()
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with headers are already TitleCased.");
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { "Head1Head", "head2", "head3" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                };
+            this.ExpectedHeaders = new List<string>
+                                       {
+                                           "Head1Head", "Head2", "Head3"
+                                       };
+            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
+        }
+
         public void given_there_is_a_csv_with_header_with_quotes()
         {
             Console.WriteLine("Given there is a properly formatted CSV file with headers that are inside quotes.");

@@ -61,7 +61,7 @@ namespace CsvWrangler
             result[0] = char.ToUpper(result[0]);
             for (int i = 1; i < result.Length; ++i)
             {
-                result[i] = char.IsWhiteSpace(result[i - 1]) ? char.ToUpper(result[i]) : char.ToLower(result[i]);
+                result[i] = char.IsWhiteSpace(result[i - 1]) ? char.ToUpper(result[i]) : result[i];
             }
 
             return result.ToString();

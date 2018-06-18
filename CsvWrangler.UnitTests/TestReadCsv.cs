@@ -83,6 +83,14 @@ namespace CsvWrangler.UnitTests
         }
 
         [TestMethod]
+        public void title_cased_headers_are_preserved()
+        {
+            this.steps.given_there_is_a_csv_with_title_cased_headers();
+            this.steps.when_csv_is_parsed();
+            this.steps.expect_item_properties_to_correspond_to_headers();
+        }
+
+        [TestMethod]
         public void surrounding_quotes_are_removed_from_header()
         {
             this.steps.given_there_is_a_csv_with_header_with_quotes();
