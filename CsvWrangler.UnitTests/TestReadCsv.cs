@@ -216,6 +216,16 @@ namespace CsvWrangler.UnitTests
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual("Column0", string.Join(",", actual));
         }
+
+        [TestMethod]
+        public void read_csv_from_file()
+        {
+            this.steps.given_there_is_properly_formatted_csv_file_with_header();
+            this.steps.when_csv_is_parsed_from_file();
+            this.steps.expect_correct_count_of_items(useHeader: true);
+            this.steps.expect_item_properties_to_correspond_to_headers();
+            this.steps.expect_property_value_to_be_the_same_as_in_corresponding_cell();
+        }
     }
 
     // ReSharper restore InconsistentNaming

@@ -15,6 +15,7 @@ namespace CsvWrangler.UnitTests
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Dynamic;
+    using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -63,6 +64,8 @@ namespace CsvWrangler.UnitTests
 
         public Exception Exception { get; set; }
 
+        public string CsvFilePath { get; set; }
+
         /// <summary>
         /// Reset steps.
         /// </summary>
@@ -73,6 +76,7 @@ namespace CsvWrangler.UnitTests
             this.ExpectedHeaders = null;
             this.ReadResult = null;
             this.Exception = null;
+            this.CsvFilePath = null;
         }
 
         /// <summary>
@@ -80,8 +84,16 @@ namespace CsvWrangler.UnitTests
         /// </summary>
         public void given_there_is_properly_formatted_csv_with_header()
         {
+            Console.WriteLine("Given there is a properly formatted CSV with header.");
+            this.CreateProperlyFormattedCsv(',');
+        }
+
+        public void given_there_is_properly_formatted_csv_file_with_header()
+        {
             Console.WriteLine("Given there is a properly formatted CSV file with header.");
             this.CreateProperlyFormattedCsv(',');
+            this.CsvFilePath = Path.GetTempFileName();
+            File.WriteAllText(this.CsvFilePath, this.CsvContent);
         }
 
         public void given_there_is_properly_formatted_csv_with_header_and_tabs_as_separator()
@@ -216,6 +228,19 @@ namespace CsvWrangler.UnitTests
             }
         }
 
+        public void when_csv_is_parsed_from_file()
+        {
+            Console.WriteLine("When the CSV is parsed from file.");
+            try
+            {
+                this.ReadResult = CsvReader.Parse(this.CsvFilePath).Rows.ToList();
+            }
+            catch (Exception exception)
+            {
+                this.Exception = exception;
+            }
+        }
+
         /// <summary>
         /// When the CSV without header is parsed.
         /// </summary>
@@ -281,7 +306,7 @@ namespace CsvWrangler.UnitTests
                 for (int j = 0; j < headerRow.Count; j++)
                 {
                     string expected = this.TestData[i + 1][j];
-                    string actual = item.GetType().GetProperty(headerRow[j].ToTitleCase()).GetValue(item).ToString();
+                    string actual = item.GetType().GetProperty(headerRow[j].ToTitleCase())?.GetValue(item).ToString();
                     Assert.AreEqual(expected, actual);
                 }
             }
@@ -439,8 +464,7 @@ namespace CsvWrangler.UnitTests
             Console.WriteLine("Expect values that for new column to be retained in items.");
             foreach (IDictionary<string, string> item in this.ReadResult)
             {
-                string value;
-                Assert.IsFalse(item.TryGetValue(this.TestData[0][0].ToTitleCase(), out value));
+                Assert.IsFalse(item.TryGetValue(this.TestData[0][0].ToTitleCase(), out _));
             }
         }
 

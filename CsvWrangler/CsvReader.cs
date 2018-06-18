@@ -9,6 +9,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace CsvWrangler
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -17,7 +18,7 @@ namespace CsvWrangler
     /// <summary>
     /// The CSV reader.
     /// </summary>
-    public class CsvReader
+    public class CsvReader : IDisposable
     {
         /// <summary>
         /// Regular expression that matches permitted names. The expression is made
@@ -31,13 +32,55 @@ namespace CsvWrangler
         private static readonly Regex MatchSurroundingQuotes = new Regex("^[\"|'|«](?<header>.*)[\"|'|»]$");
 
         /// <summary>
+        /// The CSV file stream.
+        /// </summary>
+        private Stream stream;
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="CsvReader"/> class from being created.
+        /// </summary>
+        private CsvReader()
+        {
+        }
+
+        /// <summary>
+        /// Gets the rows read from the file.
+        /// </summary>
+        public IEnumerable<dynamic> Rows { get; private set; }
+
+        /// <summary>
+        /// Parses CSV file. and returns CsvReader initialized with the content.
+        /// </summary>
+        /// <param name="csvFilePath">
+        /// The CSV file path.
+        /// </param>
+        /// <param name="hasHeader">
+        /// Indicates if the file has a header.
+        /// </param>
+        /// <param name="options">
+        /// The options.
+        /// </param>
+        /// <returns>
+        /// The CsvReader initialized with the content of the CSV <paramref name="csvFilePath"/>.
+        /// </returns>
+        public static CsvReader Parse(string csvFilePath, bool hasHeader = true, CsvReaderOptions options = null)
+        {
+            var stream = File.OpenRead(csvFilePath);
+            return new CsvReader()
+                       {
+                           stream = stream,
+                           Rows = Parse(stream, hasHeader, options)
+                       };
+        }
+
+        /// <summary>
         /// Parse CSV file to list of dynamic objects.
         /// </summary>
         /// <param name="input">
         /// The input CSV stream.
         /// </param>
         /// <param name="hasHeader">
-        /// The has header.
+        /// Indicates if the file has a header.
         /// </param>
         /// <param name="options">
         /// The options.
@@ -108,6 +151,13 @@ namespace CsvWrangler
                     values = CsvParser.ParseLine(reader, separator).ToList();
                 }
             }
+        }
+
+        /// <inheritdoc />>
+        public void Dispose()
+        {
+            this.stream?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
