@@ -13,7 +13,6 @@ namespace CsvWrangler
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -31,6 +30,30 @@ namespace CsvWrangler
         private static readonly Type[] CultureSensitiveToStringParameters = { typeof(CultureInfo) };
 
         /// <summary>
+        /// Converts list of object of the same type to CSV and saves to file.
+        /// </summary>
+        /// <param name="items">
+        /// The items.
+        /// </param>
+        /// <param name="csvFilePath">
+        /// The CSV file path.
+        /// </param>
+        /// <param name="options">
+        /// Options for data serialization.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of the item in the list.
+        /// </typeparam>
+        public static void ToCsvFile<T>(IEnumerable<T> items, string csvFilePath, CsvWriterOptions options = null)
+        {
+            using (var stream = ToCsv(items, options))
+            using (var fileStream = File.Create(csvFilePath))
+            {
+                stream.CopyTo(fileStream);   
+            }
+        }
+
+        /// <summary>
         /// Convert list of object of the same type to CSV.
         /// </summary>
         /// <param name="items">
@@ -45,7 +68,6 @@ namespace CsvWrangler
         /// <returns>
         /// Stream that contains the CSV.
         /// </returns>
-        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1614:ElementParameterDocumentationMustHaveText", Justification = "Reviewed. Suppression is OK here.")]
         public static Stream ToCsv<T>(IEnumerable<T> items, CsvWriterOptions options = null)
         {
             if (options == null)

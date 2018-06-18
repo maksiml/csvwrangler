@@ -225,6 +225,34 @@ namespace CsvWrangler.UnitTests
             }
         }
 
+        public void when_the_list_is_persisted_to_csv_file(CsvWriterOptions options = null)
+        {
+            Console.WriteLine("When the list is converted to CSV.");
+            string csvFilePath = Path.GetTempFileName();
+            if (this.items != null)
+            {
+                CsvWriter.ToCsvFile(this.items, csvFilePath, options);
+            }
+            else if (this.dateTimeItems != null)
+            {
+                CsvWriter.ToCsvFile(this.dateTimeItems, csvFilePath, options);
+            }
+            else if (this.doubleTestItems != null)
+            {
+                CsvWriter.ToCsvFile(this.doubleTestItems, csvFilePath, options);
+            }
+            else if (this.dynamicTestItems != null)
+            {
+                CsvWriter.ToCsvFile(this.dynamicTestItems, csvFilePath, options);
+            } 
+            else
+            {
+                throw new InvalidOperationException("No items to serialized are specified.");
+            }
+
+            this.csv = File.ReadAllText(csvFilePath);
+        }
+
         /// <summary>
         /// Expect the CSV to have a header that contains expected header values.
         /// </summary>
