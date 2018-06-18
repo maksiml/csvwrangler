@@ -19,7 +19,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>CsvWrangler</Id>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Title>CsvWrangler</Title>
     <Authors>csvwrangler.net</Authors>
     <Owners>csvwrangler.net</Owners>
@@ -29,7 +29,7 @@
     </ReleaseNotes>
     <ProjectUrl>http://csvwrangler.net</ProjectUrl>
     <LicenseUrl>http://www.opensource.org/licenses/ms-pl.html</LicenseUrl>
-    <Copyright>Copyright © 2015-2017 csvwrangler.net</Copyright>
+    <Copyright>Copyright © 2015-2018 csvwrangler.net</Copyright>
     <Tags>csv csvwrangler spreadsheet coma-separated</Tags>
   </PropertyGroup>
   <ItemGroup>
