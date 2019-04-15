@@ -103,8 +103,11 @@ namespace CsvWrangler
                 if (sourceType == null)
                 {
                     sourceType = item.GetType();
-                    properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                    stringBuilder.Append(string.Join(",", properties.Select(property => property.Name)));
+                    properties = sourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                        .Where(property => property.GetIndexParameters().Length == 0) // exclude indexers
+                        .ToArray();
+                    var headers = properties.Select(property => property.Name);
+                    stringBuilder.Append(string.Join(",", headers));
                 }
 
                 yield return stringBuilder.ToString();

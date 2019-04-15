@@ -60,6 +60,8 @@ namespace CsvWrangler.UnitTests
 
         private TestItemGenerator testItemGenerator;
 
+        private List<IndexerTestItem> indexerTestItems;
+
         /// <summary>
         /// The resulting CSV.
         /// </summary>
@@ -188,6 +190,20 @@ namespace CsvWrangler.UnitTests
             this.dynamicTestItems = this.CreateItems();
         }
 
+        public void given_there_is_a_list_of_objects_with_indexer_properties()
+        {
+            Console.WriteLine("Given there is a list of objects with indexer properties.");
+            this.indexerTestItems =
+                new List<IndexerTestItem>
+                    {
+                        new IndexerTestItem { Head1 = "val11", Head2 = "val21" },
+                        new IndexerTestItem { Head1 = "val12", Head2 = "val22" }
+                    };
+            this.indexerTestItems[0]["test"] = "test";
+            this.expectedHeaders = "Head1,Head2";
+            this.expectedLines = new[] { "val11,val21", "val12,val22" };
+        }
+
         /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
@@ -213,6 +229,10 @@ namespace CsvWrangler.UnitTests
             else if (this.dynamicTestItems != null)
             {
                 stream = CsvWriter.ToCsv(this.dynamicTestItems, options);
+            }
+            else if (this.indexerTestItems != null)
+            {
+                stream = CsvWriter.ToCsv(this.indexerTestItems, options);
             }
             else
             {
@@ -244,7 +264,11 @@ namespace CsvWrangler.UnitTests
             else if (this.dynamicTestItems != null)
             {
                 CsvWriter.ToCsvFile(this.dynamicTestItems, csvFilePath, options);
-            } 
+            }
+            else if (this.indexerTestItems != null)
+            {
+                CsvWriter.ToCsv(this.indexerTestItems, options);
+            }
             else
             {
                 throw new InvalidOperationException("No items to serialized are specified.");
@@ -434,6 +458,21 @@ namespace CsvWrangler.UnitTests
             /// </summary>
             // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public double Double { get; set; }
+        }
+
+        private class IndexerTestItem
+        {
+            private readonly Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            public string Head1 { get; set; }
+
+            public string Head2 { get; set; }
+            
+            public string this[string name]
+            {
+                get => this.dictionary[name];
+                set => this.dictionary[name] = value;
+            }
         }
     }
     
