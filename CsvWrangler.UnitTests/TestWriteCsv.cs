@@ -54,8 +54,9 @@ namespace CsvWrangler.UnitTests
             this.steps.given_there_is_a_list_with_read_counter();
             this.steps.when_header_and_first_line_are_read();
 
-            // The two read lines accounts for the fact that writer logic reads one line ahead.
-            this.steps.expect_item_read_counter_to_be(2);
+            // The two read lines accounts for the fact that writer logic reads one line ahead,
+            // one more read is required to determine if we are dealing with dynamic object.
+            this.steps.expect_item_read_counter_to_be(3);
         }
 
         [TestMethod]
@@ -153,6 +154,15 @@ namespace CsvWrangler.UnitTests
         public void indexer_properties_are_ignored_during_serialization()
         {
             this.steps.given_there_is_a_list_of_objects_with_indexer_properties();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
+
+        [TestMethod]
+        public void objects_of_DynamicObject_can_be_serialized_successfully()
+        {
+            this.steps.given_there_is_a_list_of_DynamicObject_items();
             this.steps.when_the_list_is_persisted_to_csv();
             this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);

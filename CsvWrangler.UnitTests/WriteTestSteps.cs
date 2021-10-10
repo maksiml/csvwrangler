@@ -13,6 +13,7 @@ namespace CsvWrangler.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Dynamic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -61,6 +62,8 @@ namespace CsvWrangler.UnitTests
         private TestItemGenerator testItemGenerator;
 
         private List<IndexerTestItem> indexerTestItems;
+
+        private List<DynamicObjectDerived> dynamicObjectItems;
 
         /// <summary>
         /// The resulting CSV.
@@ -204,6 +207,20 @@ namespace CsvWrangler.UnitTests
             this.expectedLines = new[] { "val11,val21", "val12,val22" };
         }
 
+        public void given_there_is_a_list_of_DynamicObject_items()
+        {
+            Console.WriteLine("Given there is a list of DynamicObjects.");
+            this.dynamicObjectItems = new List<DynamicObjectDerived>
+              {
+                  new DynamicObjectDerived(
+                      new Dictionary<string, string> { { "Head1", "val11" }, { "Head2", "val21" } }),
+                  new DynamicObjectDerived(
+                      new Dictionary<string, string> { { "Head1", "val12" }, { "Head2", "val22" } }),
+              };
+            this.expectedHeaders = "Head1,Head2";
+            this.expectedLines = new[] { "val11,val21", "val12,val22" };
+        }
+
         /// <summary>
         /// When the list is converted to CSV.
         /// </summary>
@@ -233,6 +250,10 @@ namespace CsvWrangler.UnitTests
             else if (this.indexerTestItems != null)
             {
                 stream = CsvWriter.ToCsv(this.indexerTestItems, options);
+            }
+            else if (this.dynamicObjectItems != null)
+            {
+                stream = CsvWriter.ToCsv(this.dynamicObjectItems, options);
             }
             else
             {
@@ -268,6 +289,10 @@ namespace CsvWrangler.UnitTests
             else if (this.indexerTestItems != null)
             {
                 CsvWriter.ToCsv(this.indexerTestItems, options);
+            }
+            else if (this.dynamicObjectItems != null)
+            {
+                CsvWriter.ToCsv(this.dynamicObjectItems, options);
             }
             else
             {
@@ -472,6 +497,52 @@ namespace CsvWrangler.UnitTests
             {
                 get => this.dictionary[name];
                 set => this.dictionary[name] = value;
+            }
+        }
+
+        private class DynamicObjectDerived : DynamicObject
+        {
+            private readonly Dictionary<string, string> values = new Dictionary<string, string>();
+
+            public DynamicObjectDerived(Dictionary<string, string> values)
+            {
+                this.values = values;
+            }
+
+            /// <summary>
+            /// Try to get cell value given header.
+            /// </summary>
+            /// <param name="binder">
+            /// The binder.
+            /// </param>
+            /// <param name="result">
+            /// The result.
+            /// </param>
+            /// <returns>
+            /// The cell value that corresponds to the header name provided in the <paramref name="binder"/>.
+            /// </returns>
+            public override bool TryGetMember(GetMemberBinder binder, out object result)
+            {
+                result = null;
+                string header = binder.Name;
+                bool memeberExists = this.values.ContainsKey(header);
+                if (memeberExists)
+                {
+                    result = this.values[header];
+                }
+
+                return memeberExists;
+            }
+
+            /// <summary>
+            /// Get list of 'properties' that the object supports, list consists of header names.
+            /// </summary>
+            /// <returns>
+            /// List of header names.
+            /// </returns>
+            public override IEnumerable<string> GetDynamicMemberNames()
+            {
+                return this.values.Keys;
             }
         }
     }
