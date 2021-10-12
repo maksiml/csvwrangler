@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>CsvWrangler</AssemblyName>
+    <RootNamespace>CsvWrangler</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CsvWrangler\CsvInvalidCellCountException.cs" Link="CsvInvalidCellCountException.cs" />
+    <Compile Include="..\CsvWrangler\CsvParser.cs" Link="CsvParser.cs" />
+    <Compile Include="..\CsvWrangler\CsvReader.cs" Link="CsvReader.cs" />
+    <Compile Include="..\CsvWrangler\CsvReaderOptions.cs" Link="CsvReaderOptions.cs" />
+    <Compile Include="..\CsvWrangler\CsvRow.cs" Link="CsvRow.cs" />
+    <Compile Include="..\CsvWrangler\CsvWriter.cs" Link="CsvWriter.cs" />
+    <Compile Include="..\CsvWrangler\CsvWriterOptions.cs" Link="CsvWriterOptions.cs" />
+    <Compile Include="..\CsvWrangler\StringExtensions.cs" Link="StringExtensions.cs" />
+    <Compile Include="..\CsvWrangler\StringListStream.cs" Link="StringListStream.cs" />
+  </ItemGroup>
+
+</Project>

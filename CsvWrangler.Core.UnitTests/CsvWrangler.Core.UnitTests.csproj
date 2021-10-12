@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CsvWrangler.UnitTests\ITestItemInterface.cs" Link="ITestItemInterface.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\ParserTest.cs" Link="ParserTest.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\ReadTestsSteps.cs" Link="ReadTestsSteps.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\StringListStreamTests.cs" Link="StringListStreamTests.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\TestCsvRow.cs" Link="TestCsvRow.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\TestItemGenerator.cs" Link="TestItemGenerator.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\TestReadCsv.cs" Link="TestReadCsv.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\TestWriteCsv.cs" Link="TestWriteCsv.cs" />
+    <Compile Include="..\CsvWrangler.UnitTests\WriteTestSteps.cs" Link="WriteTestSteps.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImpromptuInterface" Version="7.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
+    <PackageReference Include="coverlet.collector" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CsvWrangler.Core\CsvWrangler.Core.csproj" />
+  </ItemGroup>
+
+</Project>
