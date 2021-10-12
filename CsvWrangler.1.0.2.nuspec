@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CsvWrangler</id>
+    <version>1.0.2</version>
+    <title>CsvWrangler</title>
+    <authors>csvwrangler.net</authors>
+    <owners>csvwrangler.net</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MS-PL</license>
+    <projectUrl>http://csvwrangler.net/</projectUrl>
+    <description>.NET library for reading and writing CSV files.</description>
+    <summary>CSV library</summary>
+    <copyright>Copyright © 2015-2021 csvwrangler.net</copyright>
+    <tags>csv csvwrangler spreadsheet coma-separated</tags>
+	<dependencies>
+	  <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework=".NETFramework4.5" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\CsvWrangler\bin\Release\CsvWrangler.dll" target="lib\net45\CsvWrangler.dll" />
+    <file src=".\CsvWrangler.Core\bin\Release\netcoreapp3.1\CsvWrangler.dll" target="lib\netcoreapp3.1\CsvWrangler.dll" />
+  </files>
+</package>

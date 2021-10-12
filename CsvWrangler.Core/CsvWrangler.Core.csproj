@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>CsvWrangler</AssemblyName>
     <RootNamespace>CsvWrangler</RootNamespace>
+    <Version>1.0.2</Version>
+    <Product>CsvWrangler</Product>
+    <Description>CSV parser and writer.</Description>
+    <Company>csvwrangler.net</Company>
+    <Authors>csvwrangler.net</Authors>
+    <Copyright>Copyright © 2015-2021 csvwrangler.net</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
