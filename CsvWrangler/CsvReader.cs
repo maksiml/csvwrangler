@@ -103,6 +103,7 @@ namespace CsvWrangler
 
                 if (hasHeader)
                 {
+                    HashSet<string> duplicateHeaderTracker = new HashSet<string>();
                     var headerRowComponents = CsvParser.ParseLine(reader, options.Separator).ToList();
                     if (!headerRowComponents.Any())
                     {
@@ -124,11 +125,12 @@ namespace CsvWrangler
                                                 : currentHeaderReplacement;
                         }
 
-                        if (string.IsNullOrEmpty(currentHeader))
+                        if (string.IsNullOrEmpty(currentHeader) || duplicateHeaderTracker.Contains(currentHeader))
                         {
-                            currentHeader = string.Format("Column{0}", i);
+                            currentHeader = $"Column{i}";
                         }
 
+                        duplicateHeaderTracker.Add(currentHeader);
                         headers.Add(currentHeader);
                     }
                 }
@@ -142,7 +144,7 @@ namespace CsvWrangler
                         var headerCount = values.Count;
                         for (int i = 0; i < headerCount; i++)
                         {
-                            headers.Add(string.Format("Column{0}", i));
+                            headers.Add($"Column{i}");
                         }
                     }
 

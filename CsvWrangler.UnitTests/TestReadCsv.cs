@@ -234,6 +234,14 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_item_properties_to_correspond_to_headers();
             this.steps.expect_property_value_to_be_the_same_as_in_corresponding_cell();
         }
+
+        [TestMethod]
+        public void replace_duplicate_headers_with_generic_names()
+        {
+            this.steps.given_there_is_a_csv_with_duplicate_headers();
+            this.steps.when_csv_is_parsed();
+            this.steps.expect_item_properties_to_correspond_to_headers();
+        }
     }
 
     // ReSharper restore InconsistentNaming

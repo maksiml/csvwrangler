@@ -169,6 +169,24 @@ namespace CsvWrangler.UnitTests
         }
 
         /// <summary>
+        /// Given there is a properly formatted CSV file with duplicate headers.
+        /// </summary>
+        public void given_there_is_a_csv_with_duplicate_headers()
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with headers that do not match rules.");
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { "Head1", "Head1", "Head3" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                };
+            this.ExpectedHeaders = new List<string>
+                                       {
+                                           "Head1", "Column1", "Head3"
+                                       };
+            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
+        }
+
+        /// <summary>
         /// Given there is a CSV without header.
         /// </summary>
         public void given_there_is_a_csv_without_header()
