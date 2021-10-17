@@ -28,13 +28,6 @@ namespace CsvWrangler
         /// <summary>
         /// Initializes a new instance of the <see cref="CsvRow"/> class.
         /// </summary>
-        public CsvRow()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CsvRow"/> class.
-        /// </summary>
         /// <param name="headers">
         /// The headers.
         /// </param>
@@ -44,6 +37,7 @@ namespace CsvWrangler
         /// <param name="options">
         /// The options.
         /// </param>
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         public CsvRow(List<string> headers, List<string> values, CsvReaderOptions options)
         {
             if (options.StrictCellCount && headers.Count != values.Count)
@@ -61,46 +55,22 @@ namespace CsvWrangler
         /// <summary>
         /// Gets the number of elements contained in the <seealso cref="ICollection&lt;T&gt;"/>.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return this.values.Count;
-            }
-        }
+        public int Count => this.values.Count;
 
         /// <summary>
         /// Gets a value indicating whether the <seealso cref="ICollection&lt;T&gt;"/> is read-only.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return ((IDictionary<string, string>)this.values).IsReadOnly;
-            }
-        }
+        public bool IsReadOnly => ((IDictionary<string, string>)this.values).IsReadOnly;
 
         /// <summary>
         /// Gets an <seealso cref="ICollection&lt;T&gt;"/> containing the values in the <seealso cref="IDictionary&lt;TKey, TValue&gt;"/>.
         /// </summary>
-        public ICollection<string> Values
-        {
-            get
-            {
-                return this.values.Values;
-            }
-        }
+        public ICollection<string> Values => this.values.Values;
 
         /// <summary>
         /// Gets an <seealso cref="ICollection&lt;T&gt;"/> containing the keys of the <seealso cref="IDictionary&lt;TKey, TValue&gt;"/>.
         /// </summary>
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return this.values.Keys;
-            }
-        }
+        public ICollection<string> Keys => this.values.Keys;
 
         /// <summary>
         /// Gets or sets the element with the specified key.
@@ -113,15 +83,9 @@ namespace CsvWrangler
         /// </returns>
         public string this[string key]
         {
-            get
-            {
-                return this.values[key];
-            }
+            get => this.values[key];
 
-            set
-            {
-                this.values[key] = value;
-            }
+            set => this.values[key] = value;
         }
 
         /// <summary>
@@ -140,13 +104,13 @@ namespace CsvWrangler
         {
             result = null;
             string header = binder.Name;
-            bool memeberExists = this.values.ContainsKey(header);
-            if (memeberExists)
+            bool memberExists = this.values.ContainsKey(header);
+            if (memberExists)
             {
                 result = this.values[header];
             }
 
-            return memeberExists;
+            return memberExists;
         }
 
         /// <summary>

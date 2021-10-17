@@ -49,7 +49,7 @@ namespace CsvWrangler
         public IEnumerable<dynamic> Rows { get; private set; }
 
         /// <summary>
-        /// Parses CSV file. and returns CsvReader initialized with the content.
+        /// Parses CSV file. and returns <seealso cref="CsvReader"/> initialized with the content.
         /// </summary>
         /// <param name="csvFilePath">
         /// The CSV file path.
@@ -61,7 +61,7 @@ namespace CsvWrangler
         /// The options.
         /// </param>
         /// <returns>
-        /// The CsvReader initialized with the content of the CSV <paramref name="csvFilePath"/>.
+        /// The <seealso cref="CsvReader"/> initialized with the content of the CSV <paramref name="csvFilePath"/>.
         /// </returns>
         public static CsvReader Parse(string csvFilePath, bool hasHeader = true, CsvReaderOptions options = null)
         {

@@ -156,7 +156,7 @@ namespace CsvWrangler
         /// <paramref name="offset"/> or <paramref name="count"/> is negative.
         /// </exception>
         /// <exception cref="T:System.IO.IOException">
-        /// An I/O error occured, such as the specified file cannot be found.
+        /// An I/O error occurred, such as the specified file cannot be found.
         /// </exception>
         /// <exception cref="T:System.NotSupportedException">
         /// The stream does not support writing.
@@ -280,7 +280,7 @@ namespace CsvWrangler
                         return copiedCount;
                     }
 
-                    this.sourceBuffer = Encoding.UTF8.GetBytes(this.sourceEnumerator.Current);
+                    this.sourceBuffer = Encoding.UTF8.GetBytes(this.sourceEnumerator.Current ?? string.Empty);
                     this.sourceOffset = 0;
                 }
 
