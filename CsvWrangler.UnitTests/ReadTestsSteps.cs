@@ -18,6 +18,7 @@ namespace CsvWrangler.UnitTests
     using System.IO;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Text.RegularExpressions;
 
     using ImpromptuInterface;
 
@@ -150,6 +151,21 @@ namespace CsvWrangler.UnitTests
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
 
+        public void given_there_is_a_csv_with_header_to_match_custom_regex()
+        {
+            Console.WriteLine("Given there is a properly formatted CSV file with headers that are inside quotes.");
+            this.TestData = new List<List<string>>
+                                {
+                                    new List<string> { "\"head1, mg\"", "head2", "\"head3 head3, %\"" },
+                                    new List<string> { "val11", "val12", "val13" },
+                                };
+            this.ExpectedHeaders = new List<string>
+                                       {
+                                           "Head1", "Head2", "Head3Head3"
+                                       };
+            this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
+        }
+
         /// <summary>
         /// Given there is a properly formatted CSV file with headers that contain C# keywords.
         /// </summary>
@@ -254,6 +270,31 @@ namespace CsvWrangler.UnitTests
                 {
                     this.ReadResult = CsvReader.Parse(stream, options: options).ToList();
                 }
+            }
+            catch (Exception exception)
+            {
+                this.Exception = exception;
+            }
+        }
+
+        public void when_csv_is_parsed_with_custom_header_matching_regex()
+        {
+            Console.WriteLine("When the CSV is parsed with custom header matching regex.");
+            this.when_csv_is_parsed(new CsvReaderOptions
+                                        {
+                                            HeaderMatchRegex = new Regex(@"^(?<header>.*),.*$")
+                                        });
+        }
+
+        public void when_csv_is_parsed_with_malformed_custom_header_matching_regex()
+        {
+            Console.WriteLine("When the CSV is parsed with custom header matching regex that does not have 'header' group.");
+            try
+            {
+                this.when_csv_is_parsed(new CsvReaderOptions
+                                            {
+                                                HeaderMatchRegex = new Regex(@"^(.*),.*$")
+                                            });
             }
             catch (Exception exception)
             {
@@ -435,6 +476,9 @@ namespace CsvWrangler.UnitTests
 
                 List<string> properties = memberNames.ToList();
 
+                Console.WriteLine($"Expected headers: {string.Join(", ", this.ExpectedHeaders)}");
+                Console.WriteLine($"Actual headers: {string.Join(", ", properties)}");
+
                 Assert.AreEqual(this.ExpectedHeaders.Count, properties.Count);
 
                 for (int j = 0; j < this.ExpectedHeaders.Count; j++)
@@ -504,7 +548,26 @@ namespace CsvWrangler.UnitTests
         public void expect_invalid_cell_count_exception()
         {
             Console.WriteLine("Expect invalid cell count exception.");
-            Assert.IsInstanceOfType(this.Exception, typeof(CsvInvalidCellCountException));
+            this.expect_exception(typeof(CsvInvalidCellCountException));
+        }
+
+        public void expect_invalid_header_regex_exception()
+        {
+            Console.WriteLine("Expect invalid header regex exception.");
+            this.expect_exception(typeof(CsvInvalidHeaderRegexException));
+        }
+
+        public void expect_exception(Type expectedType)
+        {
+            if (this.Exception == null)
+            {
+                Console.WriteLine("Exception is null.");
+                Assert.Fail();
+            }
+
+            Console.WriteLine($"Expected exception type: {expectedType}");
+            Console.WriteLine($"Actual exception type: {this.Exception}");
+            Assert.IsInstanceOfType(this.Exception, expectedType);
         }
 
         public void expect_there_are_no_exceptions()

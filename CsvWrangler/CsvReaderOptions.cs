@@ -9,11 +9,18 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace CsvWrangler
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// The CSV reader options.
     /// </summary>
     public class CsvReaderOptions
     {
+        /// <summary>
+        /// Regular expression for parsing header values. The expression must contain 'header' group to qualify.
+        /// </summary>
+        private Regex headerMatchRegex;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CsvReaderOptions"/> class.
         /// </summary>
@@ -54,5 +61,38 @@ namespace CsvWrangler
         /// Gets or sets the handler to be called when CSV header is being resolved.
         /// </summary>
         public ResolveHeaderNameHandler ResolveHeaderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets regular expression for parsing header values. The expression must contain
+        /// 'header' group to qualify.
+        /// </summary>
+        public Regex HeaderMatchRegex
+        {
+            get => this.headerMatchRegex;
+            set
+            {
+                if (!IsValidHeaderMatchingRegex(value))
+                {
+                    throw new CsvInvalidHeaderRegexException(
+                        $"The regex '{value}' does not have match group 'header'.");
+                }
+
+                this.headerMatchRegex = value;
+            }
+        }
+
+        /// <summary>
+        /// Verifies that supplied regex matching expression is valid.
+        /// </summary>
+        /// <param name="value">
+        /// The header matching regex.
+        /// </param>
+        /// <returns>
+        /// <b>true</b> if the header regex matching expression is valid.
+        /// </returns>
+        private static bool IsValidHeaderMatchingRegex(Regex value)
+        {
+            return Regex.IsMatch(value.ToString(), @"\(\?<header>.*\)");
+        }
     }
 }

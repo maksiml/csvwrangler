@@ -112,7 +112,7 @@ namespace CsvWrangler
 
                     for (int i = 0; i < headerRowComponents.Count; i++)
                     {
-                        string currentHeader = TransformHeaderNameToPropertyName(headerRowComponents[i]);
+                        string currentHeader = TransformHeaderNameToPropertyName(headerRowComponents[i], options.HeaderMatchRegex ?? MatchSurroundingQuotes);
                         currentHeader = AllowedHeaderNames.IsMatch(currentHeader) ? currentHeader : null;
                         if (options.ResolveHeaderName != null)
                         {
@@ -168,18 +168,21 @@ namespace CsvWrangler
         /// <param name="headerName">
         /// The header name.
         /// </param>
+        /// <param name="matchRegex">
+        /// The custom regex to match headers.
+        /// </param>
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        private static string TransformHeaderNameToPropertyName(string headerName)
+        private static string TransformHeaderNameToPropertyName(string headerName, Regex matchRegex)
         {
-            string result = headerName.ToTitleCase().Replace(" ", string.Empty);
-            if (MatchSurroundingQuotes.IsMatch(headerName))
+            string result = headerName;
+            if (matchRegex.IsMatch(headerName))
             {
-                result = MatchSurroundingQuotes.Match(headerName).Groups["header"].ToString().ToTitleCase();
+                result = matchRegex.Match(headerName).Groups["header"].ToString();
             }
 
-            return result;
+            return result.ToTitleCase().Replace(" ", string.Empty);
         }
     }
 }

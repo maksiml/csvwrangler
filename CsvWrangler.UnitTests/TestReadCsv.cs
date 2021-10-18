@@ -242,6 +242,22 @@ namespace CsvWrangler.UnitTests
             this.steps.when_csv_is_parsed();
             this.steps.expect_item_properties_to_correspond_to_headers();
         }
+
+        [TestMethod]
+        public void allow_custom_header_matching_regex()
+        {
+            this.steps.given_there_is_a_csv_with_header_to_match_custom_regex();
+            this.steps.when_csv_is_parsed_with_custom_header_matching_regex();
+            this.steps.expect_item_properties_to_correspond_to_headers();
+        }
+
+        [TestMethod]
+        public void custom_header_regex_without_header_group_should_fail()
+        {
+            this.steps.given_there_is_a_csv_with_header_to_match_custom_regex();
+            this.steps.when_csv_is_parsed_with_malformed_custom_header_matching_regex();
+            this.steps.expect_invalid_header_regex_exception();
+        }
     }
 
     // ReSharper restore InconsistentNaming

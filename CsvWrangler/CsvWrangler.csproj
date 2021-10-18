@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CsvInvalidCellCountException.cs" />
+    <Compile Include="CsvInvalidHeaderRegexException.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="CsvReaderOptions.cs" />

@@ -111,6 +111,9 @@
     <Compile Include="..\CsvWrangler\CsvInvalidCellCountException.cs">
       <Link>CsvInvalidCellCountException.cs</Link>
     </Compile>
+    <Compile Include="..\CsvWrangler\CsvInvalidHeaderRegexException.cs">
+      <Link>CsvInvalidHeaderRegexException.cs</Link>
+    </Compile>
     <Compile Include="..\CsvWrangler\CsvParser.cs">
       <Link>CsvParser.cs</Link>
     </Compile>

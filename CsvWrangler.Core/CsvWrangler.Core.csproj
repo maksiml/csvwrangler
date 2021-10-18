@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Compile Include="..\CsvWrangler\CsvInvalidCellCountException.cs" Link="CsvInvalidCellCountException.cs" />
+    <Compile Include="..\CsvWrangler\CsvInvalidHeaderRegexException.cs" Link="CsvInvalidHeaderRegexException.cs" />
     <Compile Include="..\CsvWrangler\CsvParser.cs" Link="CsvParser.cs" />
     <Compile Include="..\CsvWrangler\CsvReader.cs" Link="CsvReader.cs" />
     <Compile Include="..\CsvWrangler\CsvReaderOptions.cs" Link="CsvReaderOptions.cs" />
