@@ -13,6 +13,7 @@ namespace CsvWrangler.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Dynamic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -188,6 +189,59 @@ namespace CsvWrangler.UnitTests
         {
             Console.WriteLine("Given there is a list of dynamic items.");
             this.dynamicTestItems = this.CreateItems();
+        }
+
+        public void given_there_is_a_list_of_expando_items()
+        {
+            Console.WriteLine("Given there is a list of expando items.");
+            var result = new List<dynamic>();
+            this.expectedHeaders = "Head1,Head2,Head3";
+            var headers = this.expectedHeaders.Split(',');
+            this.expectedLines = new[]
+                        {
+                            "val11,val12,val13",
+                            "val21,val22,val23"
+                        };
+            foreach(var line in this.expectedLines)
+            {
+                var expando = new ExpandoObject();
+                var expandoDictionary = (IDictionary<string, object>)expando;
+                var cells = line.Split(',');
+                for(int i = 0; i < cells.Length; i++)
+                {
+                    expandoDictionary[headers[i]] = cells[i];
+                }
+
+                result.Add(expando);
+            }
+
+            this.dynamicTestItems = result;
+        }
+
+        public void given_there_is_a_list_of_dictionary_items()
+        {
+            Console.WriteLine("Given there is a list of dictionary items.");
+            var result = new List<Dictionary<string, string>>();
+            this.expectedHeaders = "Head1,Head2,Head3";
+            var headers = this.expectedHeaders.Split(',');
+            this.expectedLines = new[]
+                        {
+                            "val11,val12,val13",
+                            "val21,val22,val23"
+                        };
+            foreach (var line in this.expectedLines)
+            {
+                var dictionary = new Dictionary<string, string>();
+                var cells = line.Split(',');
+                for (int i = 0; i < cells.Length; i++)
+                {
+                    dictionary[headers[i]] = cells[i];
+                }
+
+                result.Add(dictionary);
+            }
+
+            this.dynamicTestItems = result;
         }
 
         public void given_there_is_a_list_of_objects_with_indexer_properties()

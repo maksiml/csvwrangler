@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>CsvWrangler</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <title>CsvWrangler</title>
     <authors>csvwrangler.net</authors>
     <owners>csvwrangler.net</owners>
@@ -13,13 +13,15 @@
     <summary>CSV library</summary>
     <copyright>Copyright © 2015-2021 csvwrangler.net</copyright>
     <tags>csv csvwrangler spreadsheet coma-separated</tags>
+	<readme>.\README.md</readme>
 	<dependencies>
-	  <group targetFramework=".NETCoreApp3.1" />
-      <group targetFramework=".NETFramework4.5" />
+	  <group targetFramework=".net6.0" />
+      <group targetFramework=".NETFramework4.7.2" />
     </dependencies>
   </metadata>
   <files>
-    <file src=".\CsvWrangler\bin\Release\CsvWrangler.dll" target="lib\net45\CsvWrangler.dll" />
-    <file src=".\CsvWrangler.Core\bin\Release\netcoreapp3.1\CsvWrangler.dll" target="lib\netcoreapp3.1\CsvWrangler.dll" />
+    <file src=".\CsvWrangler\bin\Release\CsvWrangler.dll" target="lib\net472\CsvWrangler.dll" />
+    <file src=".\CsvWrangler.Core\bin\Release\net6.0\CsvWrangler.dll" target="lib\net6.0\CsvWrangler.dll" />
+    <file src=".\README.md" target="README.md" />
   </files>
 </package>
