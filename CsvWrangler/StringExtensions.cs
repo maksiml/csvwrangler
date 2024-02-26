@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="StringExtensions.cs" company="CsvWrangler">
-//   This file is a part of CsvHelper and is licensed under the MS-PL.
-//   http://www.opensource.org/licenses/ms-pl.html
+//    This file is a part of CsvWrangler and is licensed under the MS-PL.
+//    http://www.opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
 //   The string extension methods.
@@ -21,7 +21,7 @@ namespace CsvWrangler
     {
         /// <summary>
         /// Create stream from string.
-        /// from: http://stackoverflow.com/questions/1879395/how-to-generate-a-stream-from-a-string
+        /// from: http://stackoverflow.com/questions/1879395/how-to-generate-a-stream-from-a-string.
         /// </summary>
         /// <param name="input">
         /// The input.

@@ -22,6 +22,7 @@ namespace CsvWrangler.UnitTests
     [TestClass]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class TestCsvRow
     {
         /// <summary>
@@ -74,4 +75,5 @@ namespace CsvWrangler.UnitTests
     }
 
     // ReSharper restore InconsistentNaming
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

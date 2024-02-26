@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ParserTest.cs" company="CsvWrangler">
 //   This file is a part of CsvWrangler and is licensed under the MS-PL.
-//   //   http://www.opensource.org/licenses/ms-pl.html
+//   http://www.opensource.org/licenses/ms-pl.html
 // </copyright>
 // <summary>
 //   Test for CSVParser.
@@ -21,6 +21,7 @@ namespace CsvWrangler.UnitTests
     [TestClass]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Test class.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Reviewed. Unit test naming convention.")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class ParserTest
     {
         [TestMethod]
@@ -195,4 +196,5 @@ namespace CsvWrangler.UnitTests
             Assert.AreEqual(expected, actual);
         }
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

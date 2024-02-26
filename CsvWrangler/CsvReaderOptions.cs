@@ -44,7 +44,7 @@ namespace CsvWrangler
         public delegate string ResolveHeaderNameHandler(string csvHeaderName, string suggestedName);
 
         /// <summary>
-        /// Gets or sets a value indicating whether cell count in 
+        /// Gets or sets a value indicating whether cell count in
         /// each row should match number of headers or number of cells
         /// in first row of CSV. When the value is <b>false</b> missing
         /// cells will be filed with empty strings.

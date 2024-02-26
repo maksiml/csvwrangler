@@ -24,6 +24,7 @@ namespace CsvWrangler.UnitTests
     [TestClass]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class TestReadCsv
     {
         /// <summary>
@@ -176,7 +177,7 @@ namespace CsvWrangler.UnitTests
             int counter = 0;
             var options = new CsvReaderOptions
                               {
-                                  ResolveHeaderName = (name, suggestedName) => string.Format("H{0}", ++counter)
+                                  ResolveHeaderName = (name, suggestedName) => string.Format("H{0}", ++counter),
                               };
             var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
             Assert.AreEqual("H1,H2,H3", string.Join(",", actual));
@@ -194,7 +195,7 @@ namespace CsvWrangler.UnitTests
                     {
                         counter++;
                         return counter == 1 ? null : string.Format("H{0}", counter);
-                    }
+                    },
             };
             var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
             Assert.AreEqual("Header1,H2,H3", string.Join(",", actual));
@@ -210,7 +211,7 @@ namespace CsvWrangler.UnitTests
                 {
                     Assert.IsNull(suggestedName);
                     return null;
-                }
+                },
             };
             var actual = ((IDictionary<string, string>)CsvReader.Parse(csv.ToStream(), options: options).First()).Keys;
             Assert.AreEqual("Column0", string.Join(",", actual));
@@ -261,4 +262,5 @@ namespace CsvWrangler.UnitTests
     }
 
     // ReSharper restore InconsistentNaming
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

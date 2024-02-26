@@ -23,18 +23,20 @@ namespace CsvWrangler.UnitTests
     [TestClass]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Reviewed. Test naming convention.")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class StringListStreamTests
     {
         private static readonly List<string> StringList = new List<string>
             {
                 Guid.NewGuid().ToString(),
                 Guid.NewGuid().ToString(),
-                Guid.NewGuid().ToString()
+                Guid.NewGuid().ToString(),
             };
 
         private static StringListStream stream;
 
         [ClassInitialize]
+
         public static void ClassInitialize(TestContext context)
         {
             stream = new StringListStream(StringList.GetEnumerator());
@@ -198,4 +200,6 @@ namespace CsvWrangler.UnitTests
             Assert.IsTrue(argumentExceptionCaught);
         }
     }
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -202,12 +202,12 @@ namespace CsvWrangler.UnitTests
                             "val11,val12,val13",
                             "val21,val22,val23"
                         };
-            foreach(var line in this.expectedLines)
+            foreach (var line in this.expectedLines)
             {
                 var expando = new ExpandoObject();
                 var expandoDictionary = (IDictionary<string, object>)expando;
                 var cells = line.Split(',');
-                for(int i = 0; i < cells.Length; i++)
+                for (int i = 0; i < cells.Length; i++)
                 {
                     expandoDictionary[headers[i]] = cells[i];
                 }
@@ -271,7 +271,7 @@ namespace CsvWrangler.UnitTests
             if (this.items != null)
             {
                 stream = CsvWriter.ToCsv(this.items, options);
-            } 
+            }
             else if (this.dateTimeItems != null)
             {
                 stream = CsvWriter.ToCsv(this.dateTimeItems, options);
@@ -521,7 +521,7 @@ namespace CsvWrangler.UnitTests
             public string Head1 { get; set; }
 
             public string Head2 { get; set; }
-            
+
             public string this[string name]
             {
                 get => this.dictionary[name];
@@ -529,6 +529,6 @@ namespace CsvWrangler.UnitTests
             }
         }
     }
-    
+
     // ReSharper restore InconsistentNaming
 }

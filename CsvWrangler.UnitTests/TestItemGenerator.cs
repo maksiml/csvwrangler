@@ -66,7 +66,7 @@ namespace CsvWrangler.UnitTests
                         {
                             Head1 = Guid.NewGuid().ToString(),
                             Head2 = Guid.NewGuid().ToString(),
-                            Head3 = Guid.NewGuid().ToString()
+                            Head3 = Guid.NewGuid().ToString(),
                         }.ActLike<ITestItemInterface>();
             }
         }

@@ -23,6 +23,7 @@ namespace CsvWrangler.UnitTests
     [TestClass]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Unit test naming convention.")]
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Unit test naming convention.")]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class TestWriteCsv
     {
         /// <summary>
@@ -91,7 +92,7 @@ namespace CsvWrangler.UnitTests
             this.steps.given_there_is_a_list_of_items_of_type_that_has_date_property();
             this.steps.when_the_list_is_persisted_to_csv(new CsvWriterOptions
                                                              {
-                                                                 DateTimeFormat = DateTimeFormat, 
+                                                                 DateTimeFormat = DateTimeFormat,
                                                                  CultureInfo = CultureInfo.GetCultureInfo("lt-LT")
                                                              });
             this.steps.expect_date_field_be_persited_using_provided_format(useHeader: true, dateTimeFormat: DateTimeFormat);
@@ -123,7 +124,7 @@ namespace CsvWrangler.UnitTests
             this.steps.when_the_list_is_persisted_to_csv();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
-        
+
         [TestMethod]
         public void values_starting_with_new_line_should_be_quoted()
         {
@@ -178,4 +179,5 @@ namespace CsvWrangler.UnitTests
     }
 
     // ReSharper restore InconsistentNaming
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

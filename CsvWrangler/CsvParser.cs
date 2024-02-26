@@ -36,7 +36,7 @@ namespace CsvWrangler
             LineEnd,
 
             /// <summary>
-            /// The state that indicates that the machine is processing 
+            /// The state that indicates that the machine is processing
             /// unquoted record value.
             /// </summary>
             Default,
@@ -60,7 +60,7 @@ namespace CsvWrangler
             /// <summary>
             /// Indicates that the machine have finished processing quoted value.
             /// </summary>
-            QuotedEnd
+            QuotedEnd,
         }
 
         /// <summary>

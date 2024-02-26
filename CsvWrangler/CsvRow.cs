@@ -211,7 +211,7 @@ namespace CsvWrangler
         /// The object to remove from the <seealso cref="ICollection&lt;T&gt;"/>.
         /// </param>
         /// <returns>
-        /// true if item was successfully removed from the <seealso cref="ICollection&lt;T&gt;"/>; otherwise, false. 
+        /// true if item was successfully removed from the <seealso cref="ICollection&lt;T&gt;"/>; otherwise, false.
         /// This method also returns false if item is not found in the original <seealso cref="ICollection&lt;T&gt;"/>.
         /// </returns>
         public bool Remove(KeyValuePair<string, string> item)
@@ -268,7 +268,7 @@ namespace CsvWrangler
         /// The key whose value to get.
         /// </param>
         /// <param name="value">
-        /// When this method returns, the value associated with the specified key, if the key is found; otherwise, 
+        /// When this method returns, the value associated with the specified key, if the key is found; otherwise,
         /// the default value for the type of the value parameter. This parameter is passed uninitialized.
         /// </param>
         /// <returns>

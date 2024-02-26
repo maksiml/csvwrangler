@@ -51,7 +51,7 @@ namespace CsvWrangler
             using (var stream = ToCsv(items, options))
             using (var fileStream = File.Create(csvFilePath))
             {
-                stream.CopyTo(fileStream);   
+                stream.CopyTo(fileStream);
             }
         }
 
@@ -110,7 +110,7 @@ namespace CsvWrangler
                     isExpandoObject = item.GetType() == typeof(ExpandoObject);
                     isDictionary = item is IDictionary;
                     sourceType = item.GetType();
-                    if(isDictionary || isExpandoObject)
+                    if (isDictionary || isExpandoObject)
                     {
                         keys = isExpandoObject ? GetDictionaryKeys(item as ExpandoObject) : GetDictionaryKeys((IDictionary)item);
                         stringBuilder.Append(string.Join(",", keys));
@@ -311,7 +311,9 @@ namespace CsvWrangler
         /// <param name="stringBuilder">
         /// The string builder where the value will be appended.
         /// </param>
-        /// <param name="valueGetter"></param>
+        /// <param name="valueGetter">
+        /// A function to retrive value from the <paramref name="item"/> by key.
+        /// </param>
         private static void AddRowFromDictionary<T>(T item, List<object> keys, CsvWriterOptions options, StringBuilder stringBuilder, Func<T, object, object> valueGetter)
         {
             for (var i = 0; i < keys.Count; i++)

@@ -23,7 +23,8 @@ namespace CsvWrangler
         /// <param name="error">
         /// The error.
         /// </param>
-        public CsvInvalidHeaderRegexException(string error) : base($"Provided header matching regex is not acceptable: '{error}'")
+        public CsvInvalidHeaderRegexException(string error)
+            : base($"Provided header matching regex is not acceptable: '{error}'")
         {
         }
     }

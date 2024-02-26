@@ -116,7 +116,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Head1Head", "Head2", "Head3"
+                                      "Head1Head", "Head2", "Head3",
                                   };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -131,7 +131,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                        {
-                                           "Head1Head", "Head2", "Head3"
+                                           "Head1Head", "Head2", "Head3",
                                        };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -146,7 +146,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Head1", "Head2", "Head3"
+                                      "Head1", "Head2", "Head3",
                                   };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -161,7 +161,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                        {
-                                           "Head1", "Head2", "Head3Head3"
+                                           "Head1", "Head2", "Head3Head3",
                                        };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -179,7 +179,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Column0", "Head3", "Column2"
+                                      "Column0", "Head3", "Column2",
                                   };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -197,7 +197,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                        {
-                                           "Head1", "Column1", "Head3"
+                                           "Head1", "Column1", "Head3",
                                        };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -216,7 +216,7 @@ namespace CsvWrangler.UnitTests
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Column0", "Column1", "Column2"
+                                      "Column0", "Column1", "Column2",
                                   };
         }
 
@@ -235,7 +235,12 @@ namespace CsvWrangler.UnitTests
             Console.WriteLine("Given there is a line ending with an empty string value.");
             this.TestData = new List<List<string>>
                                 {
-                                    new List<string> { string.Empty, string.Empty, string.Empty }
+                                    new List<string>
+                                    {
+                                        string.Empty,
+                                        string.Empty,
+                                        string.Empty,
+                                    },
                                 };
         }
 
@@ -250,7 +255,7 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Head1", "Head2", "Head3"
+                                      "Head1", "Head2", "Head3",
                                   };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(",", row)));
         }
@@ -282,7 +287,7 @@ namespace CsvWrangler.UnitTests
             Console.WriteLine("When the CSV is parsed with custom header matching regex.");
             this.when_csv_is_parsed(new CsvReaderOptions
                                         {
-                                            HeaderMatchRegex = new Regex(@"^(?<header>.*),.*$")
+                                            HeaderMatchRegex = new Regex(@"^(?<header>.*),.*$"),
                                         });
         }
 
@@ -293,7 +298,7 @@ namespace CsvWrangler.UnitTests
             {
                 this.when_csv_is_parsed(new CsvReaderOptions
                                             {
-                                                HeaderMatchRegex = new Regex(@"^(.*),.*$")
+                                                HeaderMatchRegex = new Regex(@"^(.*),.*$"),
                                             });
             }
             catch (Exception exception)
@@ -432,7 +437,7 @@ namespace CsvWrangler.UnitTests
                     for (int j = 0; j < keys.Count; j++)
                     {
                         Assert.AreEqual(this.ExpectedHeaders[j], keys[j]);
-                    }                    
+                    }
                 }
             }
         }
@@ -603,10 +608,11 @@ namespace CsvWrangler.UnitTests
                                 };
             this.ExpectedHeaders = new List<string>
                                   {
-                                      "Head1", "Head2", "Head3"
+                                      "Head1", "Head2", "Head3",
                                   };
             this.CsvContent = string.Join("\n", this.TestData.Select(row => string.Join(separator.ToString(), row)));
         }
     }
+
     // ReSharper restore InconsistentNaming
 }

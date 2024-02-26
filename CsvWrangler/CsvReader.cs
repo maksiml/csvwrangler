@@ -69,7 +69,7 @@ namespace CsvWrangler
             return new CsvReader()
                        {
                            stream = stream,
-                           Rows = Parse(stream, hasHeader, options)
+                           Rows = Parse(stream, hasHeader, options),
                        };
         }
 
@@ -117,7 +117,7 @@ namespace CsvWrangler
                         if (options.ResolveHeaderName != null)
                         {
                             var currentHeaderReplacement = options.ResolveHeaderName(
-                                headerRowComponents[i], 
+                                headerRowComponents[i],
                                 currentHeader);
 
                             currentHeader = string.IsNullOrEmpty(currentHeaderReplacement)
