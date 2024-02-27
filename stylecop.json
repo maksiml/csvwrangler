@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "documentationRules": {
+      "companyName": "CsvWrangler",
+      "copyrightText": "  This file is a part of CsvWrangler and is licensed under the MS-PL.\r\n  http://www.opensource.org/licenses/ms-pl.html"
+    }
+  }
+}
