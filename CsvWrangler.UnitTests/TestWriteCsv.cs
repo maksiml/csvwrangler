@@ -176,6 +176,15 @@ namespace CsvWrangler.UnitTests
             this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
             this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
         }
+
+        [TestMethod]
+        public void null_values_have_to_be_converted_to_empty_string()
+        {
+            this.steps.given_there_is_a_list_of_same_type_items_with_some_null_values();
+            this.steps.when_the_list_is_persisted_to_csv();
+            this.steps.expect_csv_to_have_a_header_that_contains_expected_value();
+            this.steps.expect_each_line_in_csv_to_correspond_to_the_respective_item(useHeader: true);
+        }
     }
 
     // ReSharper restore InconsistentNaming

@@ -87,6 +87,12 @@ namespace CsvWrangler.UnitTests
             this.items = this.CreateItems().Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
         }
 
+        public void given_there_is_a_list_of_same_type_items_with_some_null_values()
+        {
+            Console.WriteLine("Given there is a list of items of the same type and some values are null.");
+            this.items = this.CreateItems(injectNulls: true).Select(item => Impromptu.ActLike<ITestItemInterface>(item)).Cast<ITestItemInterface>().ToList();
+        }
+
         public void given_there_is_a_list_with_read_counter()
         {
             Console.WriteLine("Given there is a list of items with read counter.");
@@ -457,18 +463,18 @@ namespace CsvWrangler.UnitTests
             Assert.AreEqual(expectedValue, line);
         }
 
-        private List<dynamic> CreateItems()
+        private List<dynamic> CreateItems(bool injectNulls = false)
         {
             var result = new List<dynamic>
                 {
                     new { Head1 = "val11", Head2 = "val12", Head3 = "val13" },
-                    new { Head1 = "val21", Head2 = "val22", Head3 = "val23" }
+                    new { Head1 = "val21", Head2 = injectNulls ? null : "val22", Head3 = "val23" }
                 };
             this.expectedHeaders = "Head1,Head2,Head3";
             this.expectedLines = new[]
                                     {
                                         "val11,val12,val13",
-                                        "val21,val22,val23"
+                                        injectNulls ? "val21,,val23" : "val21,val22,val23"
                                     };
             return result;
         }

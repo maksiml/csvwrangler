@@ -170,6 +170,11 @@ namespace CsvWrangler
         /// </param>
         private static void AppendValue(object value, CsvWriterOptions options, StringBuilder stringBuilder)
         {
+            if (value == null)
+            {
+                return;
+            }
+
             var propertyType = value.GetType();
             if (propertyType == typeof(DateTime))
             {
